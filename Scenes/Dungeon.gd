@@ -78,3 +78,4 @@ func move_player(dir: Vector2):
 
 	player.target_position = tile_to_pos(new_tile)
 	player.get_node("Mesh").roll(dir)
+	player.roll(dir)
