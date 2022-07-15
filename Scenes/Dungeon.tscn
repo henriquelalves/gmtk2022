@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/Dungeon.gd" type="Script" id=1]
+
+[sub_resource type="PlaneMesh" id=1]
+
+[node name="Dungeon" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="GridMap" type="GridMap" parent="."]
+data = {
+"cells": PoolIntArray(  )
+}
+__meta__ = {
+"_editor_clip_": 0
+}
+
+[node name="Floor" type="MeshInstance" parent="."]
+transform = Transform( 12.2453, 0, 0, 0, 1, 0, 0, 0, 12.2453, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.999945, 0.0103301, -0.00192307, 0, 0.183018, 0.98311, 0.0105076, -0.983055, 0.183008, -0.265683, 23.6788, 4.79274 )
