@@ -14,22 +14,21 @@ onready var tiles_floor = {
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
-	
 	build_floor()
 
 func build_floor():
 	player = Player.instance()
 	add_child(player)
-	
+
 	var rand_pos = Vector2(-5, 0)
 	tiles_entities[rand_pos] = player
-	
+
 	for i in range(4):
 		rand_pos = Vector2(randi()%6 - 3, randi()%6 - 3)
 		var obstacle = Obstacle.instance()
 		tiles_entities[rand_pos] = obstacle
 		add_child(obstacle)
-	
+
 	for key in tiles_entities:
 		tiles_entities[key].translation = tile_to_pos(key)
 
@@ -53,10 +52,10 @@ func _input(event):
 func move_player(dir: Vector2):
 	var curr_tile = pos_to_tile(player.translation)
 	var new_tile = curr_tile + dir
-	
+
 	if tiles_entities.has(new_tile):
 		return
-	
+
 	tiles_entities.erase(curr_tile)
 	tiles_entities[new_tile] = player
 	player.translation = tile_to_pos(new_tile)
