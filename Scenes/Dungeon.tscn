@@ -1,8 +1,16 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/Dungeon.gd" type="Script" id=1]
 
 [sub_resource type="PlaneMesh" id=1]
+
+[sub_resource type="ProceduralSky" id=2]
+
+[sub_resource type="Environment" id=3]
+background_mode = 2
+background_sky = SubResource( 2 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+dof_blur_far_amount = 0.06
 
 [node name="Dungeon" type="Spatial"]
 script = ExtResource( 1 )
@@ -12,5 +20,21 @@ transform = Transform( 12.2453, 0, 0, 0, 1, 0, 0, 0, 12.2453, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = null
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 0.999945, 0.0103301, -0.00192307, 0, 0.183018, 0.98311, 0.0105076, -0.983055, 0.183008, -0.265683, 13.015, 5.46677 )
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 3 )
+
+[node name="Pitch" type="Spatial" parent="."]
+transform = Transform( 0.837957, 0, -0.545736, 0, 1, 0, 0.545736, 0, 0.837957, 0, 0, 0 )
+
+[node name="Yaw" type="Spatial" parent="Pitch"]
+transform = Transform( 1, 0, 0, 0, 0.665856, 0.746081, 0, -0.746081, 0.665856, 1.90735e-06, 27.9035, 24.1124 )
+
+[node name="Camera" type="Camera" parent="Pitch/Yaw"]
+projection = 1
+fov = 24.0
+size = 7.35
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.73644, 0.441272, -0.512773, 0, 0.757975, 0.652284, 0.676503, -0.480367, 0.558203, 0, 35.1428, 0 )
+light_energy = 0.5
+shadow_enabled = true
