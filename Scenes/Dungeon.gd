@@ -4,6 +4,7 @@ const Player = preload("res://Scenes/Player.tscn")
 const Obstacle = preload("res://Scenes/Obstacle.tscn")
 
 onready var player = null
+onready var camera = $Pitch
 
 onready var tiles_entities = {
 }
@@ -15,6 +16,7 @@ onready var tiles_floor = {
 func _ready():
 	randomize()
 	build_floor()
+
 
 func build_floor():
 	player = Player.instance()
@@ -34,6 +36,8 @@ func build_floor():
 		tiles_entities[key].translation = tile_to_pos(key)
 		if tiles_entities[key].get("target_position") != null:
 			tiles_entities[key].target_position = tile_to_pos(key)
+
+	camera.follow(player)
 
 func tile_to_pos(tile : Vector2):
 	return Vector3(tile.x, 0, -tile.y)
