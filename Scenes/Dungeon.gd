@@ -99,6 +99,7 @@ func move_player(dir : Vector2):
 	var new_tile = cur_tile + dir
 
 	if tiles_entities.has(new_tile):
+		player.add_action("cor_shake", [0.2])
 		return
 
 	tiles_entities.erase(cur_tile)
@@ -106,7 +107,7 @@ func move_player(dir : Vector2):
 
 	#player_check_attack(new_tile)
 
-	player.add_action("cor_move", [tile_to_pos(new_tile)])
+	player.add_action("cor_move", [tile_to_pos(new_tile), 0.2])
 	player.roll(dir)
 
 func tile_to_pos(tile : Vector2):
