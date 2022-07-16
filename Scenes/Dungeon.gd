@@ -41,10 +41,8 @@ func build_floor():
 	camera.follow(player)
 
 func _process(delta):
-
 	var actionables = get_tree().get_nodes_in_group("actionables")
 
-	#TODO O T I M I Z A R
 	var idle = true
 
 	for actionable in actionables:
@@ -56,9 +54,21 @@ func _process(delta):
 	if not idle or input == Vector2.ZERO:
 		return
 
+	process_turn_logic()
+
+func process_turn_logic():
+	# player attack
+
+	# player move
 	move_player(input)
 	input = Vector2.ZERO
 
+	# check tile player
+	# monsters move+attack
+	# check tile monsters
+
+	# start actions
+	var actionables = get_tree().get_nodes_in_group("actionables")
 	for actionable in actionables:
 		actionable.play_actions()
 
@@ -78,19 +88,11 @@ func _input(event):
 			input = Vector2(+1,0)
 		KEY_LEFT:
 			input = Vector2(-1,0)
+		KEY_ESCAPE:
+			get_tree().change_scene("res://Scenes/Dungeon.tscn")
 
 func player_check_attack(tile):
 	pass
-
-# turn player
-# turn monster
-
-# player input
-# player attack
-# player move
-# check tile player
-# monsters move+attack
-# check tile monsters
 
 func move_player(dir : Vector2):
 	var cur_tile = pos_to_tile(player.translation)
@@ -106,7 +108,6 @@ func move_player(dir : Vector2):
 
 	player.add_action("cor_move", [tile_to_pos(new_tile)])
 	player.roll(dir)
-	print(player.get_upper_face())
 
 func tile_to_pos(tile : Vector2):
 	return Vector3(tile.x, 0, -tile.y)
