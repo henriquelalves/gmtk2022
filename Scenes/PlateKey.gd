@@ -1,15 +1,15 @@
 extends Plate
 
-export(NodePath) var door_path
+export(NodePath) var crystal_path
 
-onready var door : Door = get_node(door_path) setget set_door
+onready var crystal : Crystal = get_node(crystal_path) setget set_crystal
 
 func activate():
-	if door == null or door.is_open:
+	if crystal == null or crystal.is_active:
 		return
 
-	door.add_action("cor_open", [0.2])
+	crystal.add_action("cor_activate", [0.2])
 
-func set_door(value : Door):
-	door = value
-	door_path = value.get_path()
+func set_crystal(value : Crystal):
+	crystal = value
+	crystal_path = value.get_path()
