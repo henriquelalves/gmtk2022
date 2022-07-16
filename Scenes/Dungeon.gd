@@ -4,7 +4,7 @@ const Player = preload("res://Scenes/Player.tscn")
 const Obstacle = preload("res://Scenes/Obstacle.tscn")
 const MonsterScene = preload("res://Scenes/MonsterRandCardinal.tscn")
 const PlateKey = preload("res://Scenes/PlateKey.tscn")
-const Door = preload("res://Scenes/Door.tscn")
+const Crystal = preload("res://Scenes/Crystal.tscn")
 
 onready var camera = $Pitch
 onready var player : Entity = null
@@ -58,20 +58,20 @@ func build_floor():
 		set_tile(monster, rand_pos)
 		add_child(monster)
 
-	var number_doors = floor(Global.current_stage / 10.0) + 1
-	for i in range(number_doors):
+	var number_crystals = floor(Global.current_stage / 10.0) + 1
+	for i in range(number_crystals):
 		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
 		while tiles_entities.has(rand_pos):
 			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		var door = Door.instance()
-		set_tile(door, rand_pos)
-		add_child(door)
+		var crystal = Crystal.instance()
+		set_tile(crystal, rand_pos)
+		add_child(crystal)
 
 		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
 		while tiles_entities.has(rand_pos):
 			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
 		var plate_key = PlateKey.instance()
-		plate_key.set_door(door)
+		plate_key.set_crystal(crystal)
 		tiles_floor[rand_pos] = plate_key
 		add_child(plate_key)
 
@@ -93,10 +93,10 @@ func _process(delta):
 			idle = false
 			break
 
-	var doors = get_tree().get_nodes_in_group("doors")
+	var crystals = get_tree().get_nodes_in_group("crystals")
 	var next_stage = true
-	for door in doors:
-		if not door.is_open:
+	for crystal in crystals:
+		if not crystal.is_active:
 			next_stage = false
 			break
 	if next_stage:
@@ -137,7 +137,7 @@ func process_turn_logic():
 	# player move
 	if move_entity(player, input):
 		player.roll(input)
-	
+
 	var player_tile = entities_tiles[player]
 	if tiles_floor.has(player_tile):
 		tiles_floor[player_tile].step(player.get_top())
@@ -166,7 +166,7 @@ func process_turn_logic():
 	var actionables = get_tree().get_nodes_in_group("actionables")
 	for actionable in actionables:
 		actionable.play_actions()
-	
+
 	Global.turns -= 1
 
 func _input(event):

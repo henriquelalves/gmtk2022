@@ -10,9 +10,9 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Entity",
-"class": "Door",
+"class": "Crystal",
 "language": "GDScript",
-"path": "res://Scenes/Door.gd"
+"path": "res://Scenes/Crystal.gd"
 }, {
 "base": "Spatial",
 "class": "Entity",
@@ -30,7 +30,7 @@ _global_script_classes=[ {
 "path": "res://Scenes/Plate.gd"
 } ]
 _global_script_class_icons={
-"Door": "",
+"Crystal": "",
 "Entity": "",
 "Monster": "",
 "Plate": ""
