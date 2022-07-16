@@ -58,7 +58,8 @@ func build_floor():
 		set_tile(monster, rand_pos)
 		add_child(monster)
 
-	for i in range(2):
+	var number_doors = floor(Global.current_stage / 10.0) + 1
+	for i in range(number_doors):
 		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
 		while tiles_entities.has(rand_pos):
 			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
@@ -99,14 +100,17 @@ func _process(delta):
 			next_stage = false
 			break
 	if next_stage:
-		Global.turns += Global.BONUS_TURNS_STAGE_FINISH
-		get_tree().change_scene("res://Scenes/Dungeon.tscn")
+		next_stage()
 
 	if not idle or input == Vector2.ZERO:
 		return
 
 	process_turn_logic()
 
+func next_stage():
+	Global.turns += Global.BONUS_TURNS_STAGE_FINISH
+	Global.current_stage += 1
+	get_tree().change_scene("res://Scenes/Dungeon.tscn")
 
 func process_turn_logic():
 	# player attack
