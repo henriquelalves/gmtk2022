@@ -30,11 +30,12 @@ const chart_spin = [
 	[0, 2, 3, 0],
 ]
 
+onready var mesh = $Mesh
+
 var symbols = ['1', '3', '5', '2', '4', '6']
 
 var side = 0
 var spin = 0
-var idle = true
 
 func get_top():
 	return symbols[side]
@@ -65,8 +66,26 @@ func get_upper_face():
 	return get_top()
 
 func cor_move(args : Array): # args = [Vector3]
-	var new_pos = args[0]
-	var dir = Vector2(new_pos.x - translation.x, new_pos.z - translation.z)
-	$Mesh.roll(dir)
+	var pos_a = translation
+	var pos_b = args[0]
 
-	yield(.cor_move(args), "completed")
+	var dir = pos_b - pos_a
+
+	var basis_a = mesh.transform.basis
+	var basis_b = basis_a.rotated(Vector3(dir.z, 0, -dir.x), PI / 2)
+
+	var duration = 0.2
+	var time = 0
+
+	while true:
+		time = min(time + get_process_delta_time(), duration)
+		var weight = time / duration
+
+		translation = pos_a + dir * weight
+		mesh.transform.basis = basis_a.slerp(basis_b, weight)
+		mesh.translation = Vector3(0, 0.5 + sin(weight * PI) / 4, 0)
+
+		if time >= duration:
+			break
+
+		yield(get_tree(), "idle_frame")
