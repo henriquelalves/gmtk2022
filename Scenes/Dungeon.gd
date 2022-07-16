@@ -28,21 +28,26 @@ func set_tile(entity, tile):
 		tiles_entities[tile] = entity
 		entities_tiles[entity] = tile
 
+func kill_entity(entity):
+	var tile = entities_tiles[entity]
+	tiles_entities.erase(tile)
+	entities_tiles.erase(entity)
+
 func build_floor():
 	player = Player.instance()
 	add_child(player)
 
-	var rand_pos = Vector2(-5, 0)
+	var rand_pos = Vector2(-6, 0)
 	set_tile(player, rand_pos)
 
 	for i in range(4):
-		rand_pos = Vector2(randi()%6 - 3, randi()%6 - 3)
+		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
 		var obstacle = Obstacle.instance()
 		set_tile(obstacle, rand_pos)
 		add_child(obstacle)
 
-	for i in range(2):
-		rand_pos = Vector2(randi()%6 - 3, randi()%6 - 3)
+	for i in range(4):
+		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
 		var monster = MonsterScene.instance()
 		set_tile(monster, rand_pos)
 		add_child(monster)
@@ -68,8 +73,22 @@ func _process(delta):
 
 	process_turn_logic()
 
+
 func process_turn_logic():
 	# player attack
+	var cur_tile = entities_tiles[player]
+	var new_tile = cur_tile + input
+
+	# simulate roll to attack
+	player.roll(input)
+	if tiles_entities.has(new_tile):
+		var monster = tiles_entities[new_tile]
+		if monster.has_method("get_weakness"):
+			if tiles_entities[new_tile].get_weakness().has(player.get_upper_face()):
+				monster.alive = false
+				monster.add_action("cor_dies", [])
+				kill_entity(monster)
+	player.roll(-input)
 
 	# player move
 	if move_entity(player, input):
@@ -81,22 +100,21 @@ func process_turn_logic():
 	# monsters move+attack
 	var monsters = get_tree().get_nodes_in_group("monsters")
 	for monster in monsters:
+		if not monster.alive: continue
 		monster = monster as Monster
 		var monster_action = monster.try_moving(entities_tiles[player], entities_tiles[monster])
 		match monster_action.type:
 			Monster.MonsterActionType.IDLE:
 				pass
 			Monster.MonsterActionType.ATTACK:
-				pass
+				player.add_action("cor_shake", [0.2])
 			Monster.MonsterActionType.MOVE:
-				print(monster_action.dir)
 				move_entity(monster, monster_action.dir)
 
 	# check tile monsters
 
 	# start actions
 	var actionables = get_tree().get_nodes_in_group("actionables")
-	print(actionables)
 	for actionable in actionables:
 		actionable.play_actions()
 
@@ -124,13 +142,13 @@ func move_entity(entity : Entity, dir : Vector2):
 	var new_tile = cur_tile + dir
 
 	if tiles_entities.has(new_tile):
-		entity.add_action("cor_shake", [0.2])
+		if entity.has_method("cor_shake"):
+			entity.add_action("cor_shake", [0.2])
 		return false
 
 	set_tile(entity, new_tile)
 
-	#player_check_attack(new_tile)
-	print("foi")
+
 	entity.add_action("cor_move", [tile_to_pos(new_tile), 0.2])
 	return true
 

@@ -35,3 +35,6 @@ func cor_move(args : Array): # args = [Vector3]
 			break
 
 		yield(get_tree(), "idle_frame")
+
+func cor_dies(args : Array):
+	yield()
