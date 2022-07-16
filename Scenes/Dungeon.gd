@@ -148,10 +148,6 @@ func process_turn_logic():
 
 	# player move
 	move_entity(player, input)
-
-	var player_tile = entities_tiles[player]
-	if tiles_floor.has(player_tile):
-		tiles_floor[player_tile].step(player, self)
 	input = Vector2.ZERO
 
 	# check tile player
@@ -213,6 +209,9 @@ func move_entity(entity : Entity, dir : Vector2):
 	set_tile(entity, new_tile)
 	entity.add_action("cor_move", [tile_to_pos(new_tile), 0.2])
 	entity.roll(dir)
+
+	if tiles_floor.has(new_tile):
+		tiles_floor[new_tile].step(entity, self)
 
 func tile_to_pos(tile : Vector2):
 	return Vector3(tile.x, 0, -tile.y)
