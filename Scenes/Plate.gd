@@ -4,9 +4,9 @@ class_name Plate
 
 export(Array, String) var valid_symbols
 
-func step(symbol : String):
-	if valid_symbols.empty() or valid_symbols.has(symbol):
-		activate()
+func step(entity : Entity, dungeon):
+	if valid_symbols == null or valid_symbols.empty() or valid_symbols.has(entity.get_top()):
+		activate(entity, dungeon)
 
-func activate():
+func activate(entity : Entity, dungeon):
 	pass

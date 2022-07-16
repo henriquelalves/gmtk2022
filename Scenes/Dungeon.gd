@@ -3,6 +3,7 @@ extends Spatial
 const Player = preload("res://Scenes/Player.tscn")
 const Obstacle = preload("res://Scenes/Obstacle.tscn")
 const MonsterScene = preload("res://Scenes/MonsterRandCardinal.tscn")
+const PlateBounce = preload("res://Scenes/PlateBounce.tscn")
 const PlateKey = preload("res://Scenes/PlateKey.tscn")
 const Crystal = preload("res://Scenes/Crystal.tscn")
 
@@ -58,7 +59,7 @@ func build_floor():
 		set_tile(monster, rand_pos)
 		add_child(monster)
 
-	var number_crystals = floor(Global.current_stage / 10.0) + 1
+	var number_crystals = floor(Global.current_stage / 2.0) + 1
 	for i in range(number_crystals):
 		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
 		while tiles_entities.has(rand_pos):
@@ -68,12 +69,21 @@ func build_floor():
 		add_child(crystal)
 
 		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		while tiles_entities.has(rand_pos):
+		while tiles_floor.has(rand_pos):
 			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
 		var plate_key = PlateKey.instance()
 		plate_key.set_crystal(crystal)
 		tiles_floor[rand_pos] = plate_key
 		add_child(plate_key)
+
+	for i in range(4):
+		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
+		while tiles_floor.has(rand_pos):
+			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
+		var plate_bounce = PlateBounce.instance()
+		plate_bounce.set_cardinal(randi() % 4)
+		tiles_floor[rand_pos] = plate_bounce
+		add_child(plate_bounce)
 
 	for key in tiles_entities:
 		tiles_entities[key].translation = tile_to_pos(key)
@@ -135,12 +145,11 @@ func process_turn_logic():
 	player.roll(-input)
 
 	# player move
-	if move_entity(player, input):
-		player.roll(input)
+	move_entity(player, input)
 
 	var player_tile = entities_tiles[player]
 	if tiles_floor.has(player_tile):
-		tiles_floor[player_tile].step(player.get_top())
+		tiles_floor[player_tile].step(player, self)
 	input = Vector2.ZERO
 
 	# check tile player
@@ -201,8 +210,7 @@ func move_entity(entity : Entity, dir : Vector2):
 
 	set_tile(entity, new_tile)
 	entity.add_action("cor_move", [tile_to_pos(new_tile), 0.2])
-
-	return true
+	entity.roll(dir)
 
 func tile_to_pos(tile : Vector2):
 	return Vector3(tile.x, 0, -tile.y)

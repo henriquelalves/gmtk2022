@@ -4,7 +4,7 @@ export(NodePath) var crystal_path
 
 onready var crystal : Crystal = get_node(crystal_path) setget set_crystal
 
-func activate():
+func activate(entity : Entity, dungeon):
 	if crystal == null or crystal.is_active:
 		return
 
