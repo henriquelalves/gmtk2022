@@ -65,7 +65,7 @@ func get_cardinal(direction: Vector2):
 func get_upper_face():
 	return get_top()
 
-func cor_move(args : Array): # args = [Vector3]
+func cor_move(args : Array): # args = [Vector3, float]
 	var pos_a = translation
 	var pos_b = args[0]
 
@@ -74,7 +74,7 @@ func cor_move(args : Array): # args = [Vector3]
 	var basis_a = mesh.transform.basis
 	var basis_b = basis_a.rotated(Vector3(dir.z, 0, -dir.x), PI / 2)
 
-	var duration = 0.2
+	var duration = args[1]
 	var time = 0
 
 	while true:
@@ -86,6 +86,24 @@ func cor_move(args : Array): # args = [Vector3]
 		mesh.translation = Vector3(0, 0.5 + sin(weight * PI) / 4, 0)
 
 		if time >= duration:
+			break
+
+		yield(get_tree(), "idle_frame")
+
+func cor_shake(args : Array):
+	var duration = args[0]
+	var time = 0
+
+	var zero = Vector3(0, 0.5, 0)
+	var intensity = 0.02
+
+	while true:
+		time = min(time + get_process_delta_time(), duration)
+
+		mesh.translation = zero + (2 * Vector3(randf(), randf(), randf()) - Vector3.ONE) * intensity
+
+		if time >= duration:
+			mesh.translation = zero
 			break
 
 		yield(get_tree(), "idle_frame")
