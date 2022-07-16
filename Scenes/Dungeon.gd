@@ -3,6 +3,8 @@ extends Spatial
 const Player = preload("res://Scenes/Player.tscn")
 const Obstacle = preload("res://Scenes/Obstacle.tscn")
 const MonsterScene = preload("res://Scenes/MonsterRandCardinal.tscn")
+const PlateKey = preload("res://Scenes/PlateKey.tscn")
+const Door = preload("res://Scenes/Door.tscn")
 
 onready var camera = $Pitch
 onready var player : Entity = null
@@ -52,8 +54,23 @@ func build_floor():
 		set_tile(monster, rand_pos)
 		add_child(monster)
 
+	for i in range(2):
+		rand_pos = Vector2(randi()%6 - 3, randi()%6 - 3)
+		var door = Door.instance()
+		set_tile(door, rand_pos)
+		add_child(door)
+
+		rand_pos = Vector2(randi()%6 - 3, randi()%6 - 3)
+		var plate_key = PlateKey.instance()
+		plate_key.set_door(door)
+		tiles_floor[rand_pos] = plate_key
+		add_child(plate_key)
+
 	for key in tiles_entities:
 		tiles_entities[key].translation = tile_to_pos(key)
+
+	for key in tiles_floor:
+		tiles_floor[key].translation = tile_to_pos(key)
 
 	camera.follow(player)
 
@@ -150,6 +167,10 @@ func move_entity(entity : Entity, dir : Vector2):
 
 
 	entity.add_action("cor_move", [tile_to_pos(new_tile), 0.2])
+
+	if tiles_floor.has(new_tile):
+		tiles_floor[new_tile].step(entity.get_top())
+
 	return true
 
 func tile_to_pos(tile : Vector2):

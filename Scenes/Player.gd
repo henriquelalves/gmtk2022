@@ -37,7 +37,7 @@ var symbols = ['1', '3', '5', '2', '4', '6']
 var side = 0
 var spin = 0
 
-func get_top():
+func get_top() -> String:
 	return symbols[side]
 
 func set_bottom(symbol : String):
@@ -49,7 +49,7 @@ func roll(direction : Vector2):
 	spin = chart_spin[side][cardinal] + spin
 	side = chart_side[side][cardinal]
 
-func get_cardinal(direction: Vector2):
+func get_cardinal(direction: Vector2) -> int:
 	if direction.y > 0:
 		return 0
 
@@ -62,7 +62,9 @@ func get_cardinal(direction: Vector2):
 	if direction.x > 0:
 		return 3
 
-func get_upper_face():
+	return -1
+
+func get_upper_face() -> String:
 	return get_top()
 
 func cor_move(args : Array): # args = [Vector3, float]

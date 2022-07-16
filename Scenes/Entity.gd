@@ -10,6 +10,9 @@ func _ready():
 	if actionable:
 		add_to_group("actionables")
 
+func get_top() -> String:
+	return ''
+
 func add_action(name : String, args : Array):
 	actions_queue.append([name, args])
 
