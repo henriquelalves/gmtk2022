@@ -64,7 +64,20 @@ func process_turn_logic():
 	input = Vector2.ZERO
 
 	# check tile player
+
 	# monsters move+attack
+	var monsters = get_tree().get_nodes_in_group("monsters")
+	for monster in monsters:
+		monster = monster as Monster
+		var monster_action = monster.try_moving(pos_to_tile(player.translation), pos_to_tile(monster.translation))
+		match monster_action.type:
+			Monster.MonsterActionType.IDLE:
+				pass
+			Monster.MonsterActionType.ATTACK:
+				pass
+			Monster.MonsterActionType.MOVE:
+				pass
+
 	# check tile monsters
 
 	# start actions
