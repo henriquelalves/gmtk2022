@@ -6,7 +6,6 @@
 
 [node name="MonsterIdle" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-actionable = false
 
 [node name="Sprite3D" parent="." index="0"]
 texture = ExtResource( 3 )

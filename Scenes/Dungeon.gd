@@ -2,7 +2,7 @@ extends Spatial
 
 const Player = preload("res://Scenes/Player.tscn")
 const Obstacle = preload("res://Scenes/Obstacle.tscn")
-const MonsterScene = preload("res://Scenes/MonsterRandCardinal.tscn")
+const MonsterScene = preload("res://Scenes/MonsterIdle.tscn")
 const PlateBounce = preload("res://Scenes/PlateBounce.tscn")
 const PlateKey = preload("res://Scenes/PlateKey.tscn")
 const Crystal = preload("res://Scenes/Crystal.tscn")

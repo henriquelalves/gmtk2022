@@ -44,7 +44,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector3( 1, 1, 1 ), Vector3( 1.4, 0, 1 ) ]
+"values": [ Vector3( 1, 1, 1 ), Vector3( 1.5, 0, 1 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite3D:translation")
@@ -56,7 +56,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0, 1, 0 ), Vector3( 0, 0, 0 ) ]
+"values": [ Vector3( 0, 0.605694, 0 ), Vector3( 0, 0, 0 ) ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -84,7 +84,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0, 1, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 1, 0 ) ]
+"values": [ Vector3( 0, 0.605694, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 0.605694, 0 ) ]
 }
 
 [node name="Monster" type="Spatial"]
