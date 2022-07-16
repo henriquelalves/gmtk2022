@@ -2,28 +2,25 @@ extends Monster
 
 onready var cardinal = Vector2.UP
 onready var moved = false
-onready var wait = -1
+onready var wait = 0
 
 func _ready():
 	._ready()
 	if randf() < 0.5:
 		cardinal = Vector2.RIGHT
-	if randf() < 0.5:
-		wait = 0
 
 func get_weakness():
 	return ['2','4','6']
 
 func try_moving(player_pos : Vector2, monster_pos : Vector2) -> MonsterAction:
 	var action = MonsterAction.new()
-
-	if wait != -1:
-		if wait == 0:
-			wait = 1
-			action.type = MonsterActionType.IDLE
-			return action
-		else:
-			wait = 0
+	
+	if wait == 0:
+		wait = 1
+		action.type = MonsterActionType.IDLE
+		return action
+	else:
+		wait = 0
 
 	var next_movement = cardinal
 	if moved:

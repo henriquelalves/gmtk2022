@@ -92,6 +92,49 @@ func cor_move(args : Array): # args = [Vector3, float]
 
 		yield(get_tree(), "idle_frame")
 
+func cor_half_move(args : Array): # args = [Vector3, float]
+	var pos_original = translation
+	var pos_a = translation
+	var pos_b = args[0]
+
+	var dir = pos_b - pos_a
+
+	var basis_a = mesh.transform.basis
+	var basis_b = basis_a.rotated(Vector3(dir.z, 0, -dir.x), PI / 2)
+
+	var duration = args[1]
+	var time = 0
+
+	while true:
+		time = min(time + get_process_delta_time(), duration)
+		var weight = time / (duration)
+
+		translation = pos_a + dir * weight
+		mesh.transform.basis = basis_a.slerp(basis_b, weight)
+		mesh.translation = Vector3(0, 0.5 + sin(weight * PI) / 4, 0)
+
+		if time >= (duration):
+			break
+
+		yield(get_tree(), "idle_frame")
+
+	pos_b = pos_original
+	pos_a = translation
+	dir = pos_b - pos_a
+	time = 0
+	
+	while true:
+		time = min(time + get_process_delta_time(), duration)
+		var weight = time / (duration)
+
+		translation = pos_a + dir * weight
+
+		if time >= (duration):
+			break
+
+		yield(get_tree(), "idle_frame")
+
+
 func cor_shake(args : Array):
 	var duration = args[0]
 	var time = 0

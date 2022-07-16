@@ -122,10 +122,16 @@ func process_turn_logic():
 	if tiles_entities.has(new_tile):
 		var monster = tiles_entities[new_tile]
 		if monster is Monster:
-			monster.alive = false
-			monster.add_action("cor_dies", [])
-			Global.turns += int(player.get_upper_face())
-			kill_entity(monster)
+			var top = int(player.get_upper_face())
+			if monster.health - top <= 0:
+				monster.alive = false
+				monster.add_action("cor_dies", [])
+				Global.turns += int(player.get_upper_face())
+				kill_entity(monster)
+			else:
+				monster.health -= top
+				monster.add_action("cor_stomp", [])
+				player.add_action("cor_half_move", [tile_to_pos(new_tile), 0.2])
 	player.roll(-input)
 
 	# player move

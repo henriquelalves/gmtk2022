@@ -5,6 +5,7 @@ class_name Monster
 enum MonsterActionType {IDLE, ATTACK, MOVE}
 
 export(int) var damage = 1
+export(int) var health = 1
 
 onready var alive = true
 onready var sprite = $Sprite3D
@@ -18,6 +19,10 @@ func try_moving(player_pos : Vector2, monster_pos : Vector2) -> MonsterAction:
 
 func cor_attack(args : Array):
 	yield()
+
+func cor_stomp(args : Array):
+	$AnimationPlayer.play("stomp")
+	yield($AnimationPlayer, "animation_finished")
 
 func cor_dies(args : Array):
 	$AnimationPlayer.play("fucking_dies")
