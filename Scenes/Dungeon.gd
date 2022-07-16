@@ -3,8 +3,9 @@ extends Spatial
 const Player = preload("res://Scenes/Player.tscn")
 const Obstacle = preload("res://Scenes/Obstacle.tscn")
 
-onready var player = null
+onready var player : Entity = null
 onready var camera = $Pitch
+onready var idle = true
 
 onready var tiles_entities = {
 }
@@ -24,7 +25,6 @@ func build_floor():
 
 	var rand_pos = Vector2(-5, 0)
 	tiles_entities[rand_pos] = player
-	player.target_position = Vector3()
 
 	for i in range(4):
 		rand_pos = Vector2(randi()%6 - 3, randi()%6 - 3)
@@ -34,8 +34,6 @@ func build_floor():
 
 	for key in tiles_entities:
 		tiles_entities[key].translation = tile_to_pos(key)
-		if tiles_entities[key].get("target_position") != null:
-			tiles_entities[key].target_position = tile_to_pos(key)
 
 	camera.follow(player)
 
@@ -46,29 +44,61 @@ func pos_to_tile(pos: Vector3):
 	return Vector2(round(pos.x), round(-pos.z))
 
 func _process(delta):
-	for tile in tiles_entities.keys():
-		if tiles_entities[tile].get("target_position") != null:
-			var entity = tiles_entities[tile]
-			var new_pos = entity.target_position
-			var cur_pos = entity.translation
-			entity.translation = lerp(cur_pos, new_pos, delta * 8)
+	idle = true
+	
+	var actionables = get_tree().get_nodes_in_group("actionables")
+
+	#TODO O T I M I Z A R 
+	for actionable in actionables:
+		var entity : Entity = actionable
+		if entity.actions_queue.size() > 0:
+			idle = false
+			break
+
+func check_tile(entity):
+	pass
 
 func _input(event):
+	if not idle: return
+	
+	var turn = false
+	
 	if event is InputEventKey and event.is_pressed() and not event.is_echo():
 		if event.scancode == KEY_UP:
+			turn = true
 			move_player(Vector2(0,1))
 		elif event.scancode == KEY_DOWN:
+			turn = true
 			move_player(Vector2(0,-1))
 		elif event.scancode == KEY_RIGHT:
+			turn = true
 			move_player(Vector2(1,0))
 		elif event.scancode == KEY_LEFT:
+			turn = true
 			move_player(Vector2(-1,0))
+	
+	if turn:
+		var actionables = get_tree().get_nodes_in_group("actionables")
+		for actionable in actionables:
+			actionable.play_actions()
+
+func player_check_attack(tile):
+	pass
+
+# turn player
+# turn monster
+
+# player input
+# player attack
+# player move
+# check tile player
+# monsters move+attack
+# check tile monsters
+
 
 func move_player(dir: Vector2):
-	var curr_tile = pos_to_tile(player.target_position)
+	var curr_tile = pos_to_tile(player.translation)
 	var new_tile = curr_tile + dir
-
-	print(new_tile)
 
 	if tiles_entities.has(new_tile):
 		return
@@ -76,6 +106,11 @@ func move_player(dir: Vector2):
 	tiles_entities.erase(curr_tile)
 	tiles_entities[new_tile] = player
 
-	player.target_position = tile_to_pos(new_tile)
-	player.get_node("Mesh").roll(dir)
+	#player_check_attack(new_tile)
+
+	player.actions_queue.append(["cor_move_entity", [tile_to_pos(new_tile)]])
 	player.roll(dir)
+	
+	
+#	player.get_node("Mesh").roll(dir)
+#	player.roll(dir)

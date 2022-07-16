@@ -1,6 +1,4 @@
-extends Spatial
-
-var target_position : Vector3
+extends Entity
 
 # Cube Layout:
 # 0
@@ -36,6 +34,7 @@ var symbols = ['1', '2', '3', '4', '5', '6']
 
 var side = 0
 var spin = 0
+var idle = true
 
 func get_top():
 	return symbols[side]
@@ -48,6 +47,13 @@ func roll(direction: Vector2):
 
 	spin = chart_spin[side][cardinal] + spin
 	side = chart_side[side][cardinal]
+
+func cor_move_entity(args : Array): # args = [Vector3]
+	var new_pos = args[0]
+	var dir = Vector2(new_pos.x - translation.x, new_pos.z - translation.z)
+	$Mesh.roll(dir)
+	
+	yield(.cor_move_entity(args), "completed")
 
 func get_cardinal(direction: Vector2):
 	if direction.y > 0:
