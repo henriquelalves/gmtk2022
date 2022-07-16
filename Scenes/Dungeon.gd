@@ -2,7 +2,7 @@ extends Spatial
 
 const Player = preload("res://Scenes/Player.tscn")
 const Obstacle = preload("res://Scenes/Obstacle.tscn")
-const MonsterScene = preload("res://Scenes/Monster.tscn")
+const MonsterScene = preload("res://Scenes/MonsterRandCardinal.tscn")
 
 onready var camera = $Pitch
 onready var player : Entity = null
@@ -10,29 +10,41 @@ onready var player : Entity = null
 var input : Vector2
 
 var tiles_entities = {}
+var entities_tiles = {}
+
 var tiles_floor = {}
 
 func _ready():
 	randomize()
 	build_floor()
 
+func set_tile(entity, tile):
+	if not entities_tiles.has(entity):
+		entities_tiles[entity] = tile
+		tiles_entities[tile] = entity
+	else:
+		var old_tile = entities_tiles[entity]
+		tiles_entities.erase(old_tile)
+		tiles_entities[tile] = entity
+		entities_tiles[entity] = tile
+
 func build_floor():
 	player = Player.instance()
 	add_child(player)
 
 	var rand_pos = Vector2(-5, 0)
-	tiles_entities[rand_pos] = player
+	set_tile(player, rand_pos)
 
 	for i in range(4):
 		rand_pos = Vector2(randi()%6 - 3, randi()%6 - 3)
 		var obstacle = Obstacle.instance()
-		tiles_entities[rand_pos] = obstacle
+		set_tile(obstacle, rand_pos)
 		add_child(obstacle)
 
 	for i in range(2):
 		rand_pos = Vector2(randi()%6 - 3, randi()%6 - 3)
 		var monster = MonsterScene.instance()
-		tiles_entities[rand_pos] = monster
+		set_tile(monster, rand_pos)
 		add_child(monster)
 
 	for key in tiles_entities:
@@ -60,7 +72,8 @@ func process_turn_logic():
 	# player attack
 
 	# player move
-	move_player(input)
+	if move_entity(player, input):
+		player.roll(input)
 	input = Vector2.ZERO
 
 	# check tile player
@@ -69,19 +82,21 @@ func process_turn_logic():
 	var monsters = get_tree().get_nodes_in_group("monsters")
 	for monster in monsters:
 		monster = monster as Monster
-		var monster_action = monster.try_moving(pos_to_tile(player.translation), pos_to_tile(monster.translation))
+		var monster_action = monster.try_moving(entities_tiles[player], entities_tiles[monster])
 		match monster_action.type:
 			Monster.MonsterActionType.IDLE:
 				pass
 			Monster.MonsterActionType.ATTACK:
 				pass
 			Monster.MonsterActionType.MOVE:
-				pass
+				print(monster_action.dir)
+				move_entity(monster, monster_action.dir)
 
 	# check tile monsters
 
 	# start actions
 	var actionables = get_tree().get_nodes_in_group("actionables")
+	print(actionables)
 	for actionable in actionables:
 		actionable.play_actions()
 
@@ -104,24 +119,20 @@ func _input(event):
 		KEY_ESCAPE:
 			get_tree().change_scene("res://Scenes/Dungeon.tscn")
 
-func player_check_attack(tile):
-	pass
-
-func move_player(dir : Vector2):
-	var cur_tile = pos_to_tile(player.translation)
+func move_entity(entity : Entity, dir : Vector2):
+	var cur_tile = entities_tiles[entity]
 	var new_tile = cur_tile + dir
 
 	if tiles_entities.has(new_tile):
-		player.add_action("cor_shake", [0.2])
-		return
+		entity.add_action("cor_shake", [0.2])
+		return false
 
-	tiles_entities.erase(cur_tile)
-	tiles_entities[new_tile] = player
+	set_tile(entity, new_tile)
 
 	#player_check_attack(new_tile)
-
-	player.add_action("cor_move", [tile_to_pos(new_tile), 0.2])
-	player.roll(dir)
+	print("foi")
+	entity.add_action("cor_move", [tile_to_pos(new_tile), 0.2])
+	return true
 
 func tile_to_pos(tile : Vector2):
 	return Vector3(tile.x, 0, -tile.y)

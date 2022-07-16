@@ -9,6 +9,7 @@ export(int) var damage = 1
 onready var sprite = $Sprite3D
 
 func _ready():
+	._ready()
 	add_to_group("monsters")
 
 func try_moving(player_pos : Vector2, monster_pos : Vector2) -> MonsterAction:

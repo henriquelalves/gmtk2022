@@ -4,6 +4,7 @@ onready var cardinal = Vector2.UP
 onready var moved = false
 
 func _ready():
+	._ready()
 	if randf() < 0.5:
 		cardinal = Vector2.RIGHT
 
