@@ -11,6 +11,7 @@ albedo_color = Color( 0.34902, 0.541176, 0.835294, 1 )
 [node name="PlateKey" type="Spatial"]
 script = ExtResource( 1 )
 valid_symbols = [ "1", "2", "3" ]
+door_path = null
 
 [node name="Mesh" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 0 )

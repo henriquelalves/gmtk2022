@@ -9,6 +9,7 @@ const Crystal = preload("res://Scenes/Crystal.tscn")
 
 onready var camera = $Pitch
 onready var player : Entity = null
+onready var ui_controller = $UIController
 
 var input : Vector2
 
@@ -138,6 +139,7 @@ func process_turn_logic():
 				monster.add_action("cor_dies", [])
 				Global.turns += int(player.get_upper_face())
 				kill_entity(monster)
+				ui_controller.on_monster_killed(monster.translation, player.get_upper_face())
 			else:
 				monster.health -= top
 				monster.add_action("cor_stomp", [])
