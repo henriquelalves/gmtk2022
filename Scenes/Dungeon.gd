@@ -40,68 +40,9 @@ func kill_entity(entity):
 
 func build_floor():
 	player = Player.instance()
-	add_child(player)
-
-	var rand_pos = Vector2(-6, 0)
-	set_tile(player, rand_pos)
-
-	for i in range(4):
-		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		while tiles_entities.has(rand_pos):
-			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		var obstacle = Obstacle.instance()
-		set_tile(obstacle, rand_pos)
-		add_child(obstacle)
-
-	for i in range(4):
-		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		while tiles_entities.has(rand_pos):
-			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		var monster = MonsterScene.instance()
-		set_tile(monster, rand_pos)
-		add_child(monster)
-
-	var number_crystals = floor(Global.current_stage / 2.0) + 1
-	for i in range(number_crystals):
-		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		while tiles_entities.has(rand_pos):
-			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		var crystal = Crystal.instance()
-		set_tile(crystal, rand_pos)
-		add_child(crystal)
-
-		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		while tiles_entities.has(rand_pos) or tiles_floor.has(rand_pos):
-			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		var plate_key = PlateKey.instance()
-		plate_key.set_crystal(crystal)
-		tiles_floor[rand_pos] = plate_key
-		add_child(plate_key)
-
-	for i in range(4):
-		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		while tiles_entities.has(rand_pos) or tiles_floor.has(rand_pos):
-			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		var plate_bounce = PlateBounce.instance()
-		plate_bounce.set_cardinal(randi() % 4)
-		tiles_floor[rand_pos] = plate_bounce
-		add_child(plate_bounce)
-
-	for i in range(4):
-		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		while tiles_entities.has(rand_pos) or tiles_floor.has(rand_pos):
-			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		var plate_damage = PlateDamage.instance()
-		tiles_floor[rand_pos] = plate_damage
-		add_child(plate_damage)
-
-	for key in tiles_entities:
-		tiles_entities[key].translation = tile_to_pos(key)
-
-	for key in tiles_floor:
-		tiles_floor[key].translation = tile_to_pos(key)
-
 	camera.follow(player)
+
+	Builder.build(player, self)
 
 func _process(delta):
 	var actionables = get_tree().get_nodes_in_group("actionables")

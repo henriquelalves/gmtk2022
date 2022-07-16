@@ -51,6 +51,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Global="*res://Scenes/Global.gd"
+Builder="*res://Scenes/Builder.gd"
 
 [physics]
 
