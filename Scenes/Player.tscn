@@ -1,21 +1,66 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/Player.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Mesh.gd" type="Script" id=2]
+[ext_resource path="res://Assets/5_dots.png" type="Texture" id=3]
+[ext_resource path="res://Assets/DiceFaceMaterial.tres" type="Material" id=4]
+[ext_resource path="res://Assets/3_dots.png" type="Texture" id=5]
+[ext_resource path="res://Assets/4_dots.png" type="Texture" id=6]
+[ext_resource path="res://Assets/2_dots.png" type="Texture" id=7]
+[ext_resource path="res://Assets/6_dots.png" type="Texture" id=8]
 
-[sub_resource type="CubeMesh" id=2]
-size = Vector3( 1, 1, 1 )
+[sub_resource type="QuadMesh" id=5]
 
-[sub_resource type="SpatialMaterial" id=4]
-albedo_color = Color( 0.403922, 0.729412, 0.427451, 1 )
+[sub_resource type="SpatialMaterial" id=6]
+albedo_texture = ExtResource( 8 )
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_texture = ExtResource( 7 )
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_texture = ExtResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_texture = ExtResource( 6 )
 
 [node name="Player" type="Spatial"]
 script = ExtResource( 1 )
 actionable = true
 
-[node name="Mesh" type="MeshInstance" parent="."]
+[node name="Mesh" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
-mesh = SubResource( 2 )
-skeleton = NodePath("../..")
-material/0 = SubResource( 4 )
 script = ExtResource( 2 )
+
+[node name="FaceUp" type="MeshInstance" parent="Mesh"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, 0 )
+material_override = ExtResource( 4 )
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="FaceDown" type="MeshInstance" parent="Mesh"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.5, 0 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="FaceRight" type="MeshInstance" parent="Mesh"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, 0 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 7 )
+
+[node name="FaceLeft" type="MeshInstance" parent="Mesh"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 0 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 8 )
+
+[node name="FaceForward" type="MeshInstance" parent="Mesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 9 )
+
+[node name="FaceBackward" type="MeshInstance" parent="Mesh"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -0.5 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 10 )

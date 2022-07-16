@@ -1,4 +1,4 @@
-extends MeshInstance
+extends Spatial
 
 var target_basis : Basis
 

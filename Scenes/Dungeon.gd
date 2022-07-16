@@ -106,6 +106,7 @@ func move_player(dir : Vector2):
 
 	player.add_action("cor_move", [tile_to_pos(new_tile)])
 	player.roll(dir)
+	print(player.get_upper_face())
 
 func tile_to_pos(tile : Vector2):
 	return Vector3(tile.x, 0, -tile.y)
