@@ -44,3 +44,21 @@ func cor_move(args : Array): # args = [Vector3]
 
 func cor_dies(args : Array):
 	yield()
+
+func cor_shake(args : Array):
+	var duration = args[0]
+	var time = 0
+
+	var zero = Vector3(0, 0.5, 0)
+	var intensity = 0.02
+
+	while true:
+		time = min(time + get_process_delta_time(), duration)
+
+		translation = zero + (2 * Vector3(randf(), randf(), randf()) - Vector3.ONE) * intensity
+
+		if time >= duration:
+			translation = zero
+			break
+
+		yield(get_tree(), "idle_frame")

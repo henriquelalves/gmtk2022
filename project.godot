@@ -28,12 +28,18 @@ _global_script_classes=[ {
 "class": "Plate",
 "language": "GDScript",
 "path": "res://Scenes/Plate.gd"
+}, {
+"base": "Entity",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Scenes/Player.gd"
 } ]
 _global_script_class_icons={
 "Crystal": "",
 "Entity": "",
 "Monster": "",
-"Plate": ""
+"Plate": "",
+"Player": ""
 }
 
 [application]

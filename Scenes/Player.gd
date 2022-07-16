@@ -1,5 +1,7 @@
 extends Entity
 
+class_name Player
+
 # Cube Layout:
 # 0
 # 1
@@ -122,7 +124,7 @@ func cor_half_move(args : Array): # args = [Vector3, float]
 	pos_a = translation
 	dir = pos_b - pos_a
 	time = 0
-	
+
 	while true:
 		time = min(time + get_process_delta_time(), duration)
 		var weight = time / (duration)
@@ -133,7 +135,6 @@ func cor_half_move(args : Array): # args = [Vector3, float]
 			break
 
 		yield(get_tree(), "idle_frame")
-
 
 func cor_shake(args : Array):
 	var duration = args[0]
