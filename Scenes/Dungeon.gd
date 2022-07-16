@@ -4,6 +4,7 @@ const Player = preload("res://Scenes/Player.tscn")
 const Obstacle = preload("res://Scenes/Obstacle.tscn")
 const MonsterScene = preload("res://Scenes/MonsterIdle.tscn")
 const PlateBounce = preload("res://Scenes/PlateBounce.tscn")
+const PlateDamage = preload("res://Scenes/PlateDamage.tscn")
 const PlateKey = preload("res://Scenes/PlateKey.tscn")
 const Crystal = preload("res://Scenes/Crystal.tscn")
 
@@ -70,7 +71,7 @@ func build_floor():
 		add_child(crystal)
 
 		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		while tiles_floor.has(rand_pos):
+		while tiles_entities.has(rand_pos) or tiles_floor.has(rand_pos):
 			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
 		var plate_key = PlateKey.instance()
 		plate_key.set_crystal(crystal)
@@ -79,12 +80,20 @@ func build_floor():
 
 	for i in range(4):
 		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		while tiles_floor.has(rand_pos):
+		while tiles_entities.has(rand_pos) or tiles_floor.has(rand_pos):
 			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
 		var plate_bounce = PlateBounce.instance()
 		plate_bounce.set_cardinal(randi() % 4)
 		tiles_floor[rand_pos] = plate_bounce
 		add_child(plate_bounce)
+
+	for i in range(4):
+		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
+		while tiles_entities.has(rand_pos) or tiles_floor.has(rand_pos):
+			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
+		var plate_damage = PlateDamage.instance()
+		tiles_floor[rand_pos] = plate_damage
+		add_child(plate_damage)
 
 	for key in tiles_entities:
 		tiles_entities[key].translation = tile_to_pos(key)
@@ -148,10 +157,6 @@ func process_turn_logic():
 
 	# player move
 	move_entity(player, input)
-
-	var player_tile = entities_tiles[player]
-	if tiles_floor.has(player_tile):
-		tiles_floor[player_tile].step(player, self)
 	input = Vector2.ZERO
 
 	# check tile player
@@ -213,6 +218,9 @@ func move_entity(entity : Entity, dir : Vector2):
 	set_tile(entity, new_tile)
 	entity.add_action("cor_move", [tile_to_pos(new_tile), 0.2])
 	entity.roll(dir)
+
+	if tiles_floor.has(new_tile):
+		tiles_floor[new_tile].step(entity, self)
 
 func tile_to_pos(tile : Vector2):
 	return Vector3(tile.x, 0, -tile.y)

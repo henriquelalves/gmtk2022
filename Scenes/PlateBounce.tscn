@@ -12,7 +12,7 @@ albedo_texture = ExtResource( 2 )
 
 [node name="PlateBounce" type="Spatial"]
 script = ExtResource( 1 )
-valid_symbols = [ "2", "3", "4", "5", "6" ]
+valid_symbols = [ "2", "3", "4", "5", "6", "" ]
 cardinal = null
 
 [node name="Mesh" type="MeshInstance" parent="."]
