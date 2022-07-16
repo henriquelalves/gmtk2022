@@ -2,7 +2,7 @@ extends Spatial
 
 const Player = preload("res://Scenes/Player.tscn")
 const Obstacle = preload("res://Scenes/Obstacle.tscn")
-const Monster = preload("res://Scenes/Monster.tscn")
+const MonsterScene = preload("res://Scenes/Monster.tscn")
 
 onready var camera = $Pitch
 onready var player : Entity = null
@@ -31,7 +31,7 @@ func build_floor():
 
 	for i in range(2):
 		rand_pos = Vector2(randi()%6 - 3, randi()%6 - 3)
-		var monster = Monster.instance()
+		var monster = MonsterScene.instance()
 		tiles_entities[rand_pos] = monster
 		add_child(monster)
 
