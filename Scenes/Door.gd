@@ -6,6 +6,10 @@ export(bool) var is_open = false
 
 onready var mesh = $Mesh
 
+func _ready():
+	._ready()
+	add_to_group("doors")
+
 func cor_open(args : Array):
 	var duration = args[0]
 	var time = 0

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/Dungeon.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/CameraControl.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/UIController.gd" type="Script" id=3]
 
 [sub_resource type="PlaneMesh" id=1]
 
@@ -41,3 +42,13 @@ size = 7.35
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.73644, 0.441272, -0.512773, 0, 0.757975, 0.652284, 0.676503, -0.480367, 0.558203, 0, 35.1428, 0 )
 light_energy = 0.5
+
+[node name="UIController" type="CanvasLayer" parent="."]
+script = ExtResource( 3 )
+
+[node name="NumberOfTurns" type="Label" parent="UIController"]
+modulate = Color( 0, 0, 0, 1 )
+margin_right = 40.0
+margin_bottom = 14.0
+rect_scale = Vector2( 2, 2 )
+text = "Number of turns: 0"

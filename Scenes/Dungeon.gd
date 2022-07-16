@@ -44,23 +44,31 @@ func build_floor():
 
 	for i in range(4):
 		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
+		while tiles_entities.has(rand_pos):
+			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
 		var obstacle = Obstacle.instance()
 		set_tile(obstacle, rand_pos)
 		add_child(obstacle)
 
 	for i in range(4):
 		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
+		while tiles_entities.has(rand_pos):
+			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
 		var monster = MonsterScene.instance()
 		set_tile(monster, rand_pos)
 		add_child(monster)
 
 	for i in range(2):
-		rand_pos = Vector2(randi()%6 - 3, randi()%6 - 3)
+		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
+		while tiles_entities.has(rand_pos):
+			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
 		var door = Door.instance()
 		set_tile(door, rand_pos)
 		add_child(door)
 
-		rand_pos = Vector2(randi()%6 - 3, randi()%6 - 3)
+		rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
+		while tiles_entities.has(rand_pos):
+			rand_pos = Vector2(randi()%8 - 4, randi()%8 - 4)
 		var plate_key = PlateKey.instance()
 		plate_key.set_door(door)
 		tiles_floor[rand_pos] = plate_key
@@ -76,7 +84,6 @@ func build_floor():
 
 func _process(delta):
 	var actionables = get_tree().get_nodes_in_group("actionables")
-
 	var idle = true
 
 	for actionable in actionables:
@@ -84,6 +91,16 @@ func _process(delta):
 		if entity.actions_queue.size() > 0:
 			idle = false
 			break
+
+	var doors = get_tree().get_nodes_in_group("doors")
+	var next_stage = true
+	for door in doors:
+		if not door.is_open:
+			next_stage = false
+			break
+	if next_stage:
+		Global.turns += Global.BONUS_TURNS_STAGE_FINISH
+		get_tree().change_scene("res://Scenes/Dungeon.tscn")
 
 	if not idle or input == Vector2.ZERO:
 		return
@@ -100,16 +117,20 @@ func process_turn_logic():
 	player.roll(input)
 	if tiles_entities.has(new_tile):
 		var monster = tiles_entities[new_tile]
-		if monster.has_method("get_weakness"):
-			if tiles_entities[new_tile].get_weakness().has(player.get_upper_face()):
-				monster.alive = false
-				monster.add_action("cor_dies", [])
-				kill_entity(monster)
+		if monster is Monster:
+			monster.alive = false
+			monster.add_action("cor_dies", [])
+			Global.turns += int(player.get_upper_face())
+			kill_entity(monster)
 	player.roll(-input)
 
 	# player move
 	if move_entity(player, input):
 		player.roll(input)
+	
+	var player_tile = entities_tiles[player]
+	if tiles_floor.has(player_tile):
+		tiles_floor[player_tile].step(player.get_top())
 	input = Vector2.ZERO
 
 	# check tile player
@@ -125,6 +146,7 @@ func process_turn_logic():
 				pass
 			Monster.MonsterActionType.ATTACK:
 				player.add_action("cor_shake", [0.2])
+				Global.turns -= 1
 			Monster.MonsterActionType.MOVE:
 				move_entity(monster, monster_action.dir)
 
@@ -134,6 +156,8 @@ func process_turn_logic():
 	var actionables = get_tree().get_nodes_in_group("actionables")
 	for actionable in actionables:
 		actionable.play_actions()
+	
+	Global.turns -= 1
 
 func _input(event):
 	if input != Vector2.ZERO:
@@ -152,11 +176,13 @@ func _input(event):
 		KEY_LEFT:
 			input = Vector2(-1,0)
 		KEY_ESCAPE:
+			Global.turns = Global.STARTING_TURNS
 			get_tree().change_scene("res://Scenes/Dungeon.tscn")
 
 func move_entity(entity : Entity, dir : Vector2):
 	var cur_tile = entities_tiles[entity]
 	var new_tile = cur_tile + dir
+	new_tile = Vector2(round(new_tile.x), round(new_tile.y))
 
 	if tiles_entities.has(new_tile):
 		if entity.has_method("cor_shake"):
@@ -164,12 +190,7 @@ func move_entity(entity : Entity, dir : Vector2):
 		return false
 
 	set_tile(entity, new_tile)
-
-
 	entity.add_action("cor_move", [tile_to_pos(new_tile), 0.2])
-
-	if tiles_floor.has(new_tile):
-		tiles_floor[new_tile].step(entity.get_top())
 
 	return true
 
