@@ -39,21 +39,14 @@ var idle = true
 func get_top():
 	return symbols[side]
 
-func set_bottom(symbol: String):
+func set_bottom(symbol : String):
 	symbols[5 - side] = symbol
 
-func roll(direction: Vector2):
+func roll(direction : Vector2):
 	var cardinal = (get_cardinal(-direction) - spin) % 4
 
 	spin = chart_spin[side][cardinal] + spin
 	side = chart_side[side][cardinal]
-
-func cor_move_entity(args : Array): # args = [Vector3]
-	var new_pos = args[0]
-	var dir = Vector2(new_pos.x - translation.x, new_pos.z - translation.z)
-	$Mesh.roll(dir)
-	
-	yield(.cor_move_entity(args), "completed")
 
 func get_cardinal(direction: Vector2):
 	if direction.y > 0:
@@ -70,3 +63,10 @@ func get_cardinal(direction: Vector2):
 
 func get_upper_face():
 	return get_top()
+
+func cor_move(args : Array): # args = [Vector3]
+	var new_pos = args[0]
+	var dir = Vector2(new_pos.x - translation.x, new_pos.z - translation.z)
+	$Mesh.roll(dir)
+
+	yield(.cor_move(args), "completed")

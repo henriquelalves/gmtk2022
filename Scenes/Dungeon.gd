@@ -3,21 +3,17 @@ extends Spatial
 const Player = preload("res://Scenes/Player.tscn")
 const Obstacle = preload("res://Scenes/Obstacle.tscn")
 
-onready var player : Entity = null
 onready var camera = $Pitch
-onready var idle = true
+onready var player : Entity = null
 
-onready var tiles_entities = {
-}
+var input : Vector2
 
-onready var tiles_floor = {
-}
+var tiles_entities = {}
+var tiles_floor = {}
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
 	build_floor()
-
 
 func build_floor():
 	player = Player.instance()
@@ -37,50 +33,42 @@ func build_floor():
 
 	camera.follow(player)
 
-func tile_to_pos(tile : Vector2):
-	return Vector3(tile.x, 0, -tile.y)
-
-func pos_to_tile(pos: Vector3):
-	return Vector2(round(pos.x), round(-pos.z))
-
 func _process(delta):
-	idle = true
-	
 	var actionables = get_tree().get_nodes_in_group("actionables")
 
-	#TODO O T I M I Z A R 
+	#TODO O T I M I Z A R
+	var idle = true
 	for actionable in actionables:
 		var entity : Entity = actionable
 		if entity.actions_queue.size() > 0:
 			idle = false
 			break
 
-func check_tile(entity):
-	pass
+	if not idle or input == Vector2.ZERO:
+		return
+
+	move_player(input)
+	input = Vector2.ZERO
+
+	for actionable in actionables:
+		actionable.play_actions()
 
 func _input(event):
-	if not idle: return
-	
-	var turn = false
-	
-	if event is InputEventKey and event.is_pressed() and not event.is_echo():
-		if event.scancode == KEY_UP:
-			turn = true
-			move_player(Vector2(0,1))
-		elif event.scancode == KEY_DOWN:
-			turn = true
-			move_player(Vector2(0,-1))
-		elif event.scancode == KEY_RIGHT:
-			turn = true
-			move_player(Vector2(1,0))
-		elif event.scancode == KEY_LEFT:
-			turn = true
-			move_player(Vector2(-1,0))
-	
-	if turn:
-		var actionables = get_tree().get_nodes_in_group("actionables")
-		for actionable in actionables:
-			actionable.play_actions()
+	if input != Vector2.ZERO:
+		return
+
+	if not (event is InputEventKey) or not event.is_pressed() or event.is_echo():
+		return
+
+	match event.scancode:
+		KEY_UP:
+			input = Vector2(0,+1)
+		KEY_DOWN:
+			input = Vector2(0,-1)
+		KEY_RIGHT:
+			input = Vector2(+1,0)
+		KEY_LEFT:
+			input = Vector2(-1,0)
 
 func player_check_attack(tile):
 	pass
@@ -95,22 +83,23 @@ func player_check_attack(tile):
 # monsters move+attack
 # check tile monsters
 
-
-func move_player(dir: Vector2):
-	var curr_tile = pos_to_tile(player.translation)
-	var new_tile = curr_tile + dir
+func move_player(dir : Vector2):
+	var cur_tile = pos_to_tile(player.translation)
+	var new_tile = cur_tile + dir
 
 	if tiles_entities.has(new_tile):
 		return
 
-	tiles_entities.erase(curr_tile)
+	tiles_entities.erase(cur_tile)
 	tiles_entities[new_tile] = player
 
 	#player_check_attack(new_tile)
 
-	player.actions_queue.append(["cor_move_entity", [tile_to_pos(new_tile)]])
+	player.add_action("cor_move", [tile_to_pos(new_tile)])
 	player.roll(dir)
-	
-	
-#	player.get_node("Mesh").roll(dir)
-#	player.roll(dir)
+
+func tile_to_pos(tile : Vector2):
+	return Vector3(tile.x, 0, -tile.y)
+
+func pos_to_tile(pos: Vector3):
+	return Vector2(round(pos.x), round(-pos.z))
