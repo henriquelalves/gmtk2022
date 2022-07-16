@@ -13,6 +13,9 @@ func _ready():
 func get_top() -> String:
 	return ''
 
+func roll(direction : Vector2):
+	pass
+
 func add_action(name : String, args : Array):
 	actions_queue.append([name, args])
 
