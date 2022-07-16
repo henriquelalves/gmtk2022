@@ -2,6 +2,7 @@ extends Spatial
 
 const Player = preload("res://Scenes/Player.tscn")
 const Obstacle = preload("res://Scenes/Obstacle.tscn")
+const Monster = preload("res://Scenes/Monster.tscn")
 
 onready var player : Entity = null
 onready var camera = $Pitch
@@ -32,6 +33,12 @@ func build_floor():
 		tiles_entities[rand_pos] = obstacle
 		add_child(obstacle)
 
+	for i in range(2):
+		rand_pos = Vector2(randi()%6 - 3, randi()%6 - 3)
+		var monster = Monster.instance()
+		tiles_entities[rand_pos] = monster
+		add_child(monster)
+
 	for key in tiles_entities:
 		tiles_entities[key].translation = tile_to_pos(key)
 
@@ -45,10 +52,10 @@ func pos_to_tile(pos: Vector3):
 
 func _process(delta):
 	idle = true
-	
+
 	var actionables = get_tree().get_nodes_in_group("actionables")
 
-	#TODO O T I M I Z A R 
+	#TODO O T I M I Z A R
 	for actionable in actionables:
 		var entity : Entity = actionable
 		if entity.actions_queue.size() > 0:
@@ -60,9 +67,9 @@ func check_tile(entity):
 
 func _input(event):
 	if not idle: return
-	
+
 	var turn = false
-	
+
 	if event is InputEventKey and event.is_pressed() and not event.is_echo():
 		if event.scancode == KEY_UP:
 			turn = true
@@ -76,7 +83,7 @@ func _input(event):
 		elif event.scancode == KEY_LEFT:
 			turn = true
 			move_player(Vector2(-1,0))
-	
+
 	if turn:
 		var actionables = get_tree().get_nodes_in_group("actionables")
 		for actionable in actionables:
@@ -106,11 +113,5 @@ func move_player(dir: Vector2):
 	tiles_entities.erase(curr_tile)
 	tiles_entities[new_tile] = player
 
-	#player_check_attack(new_tile)
-
 	player.actions_queue.append(["cor_move_entity", [tile_to_pos(new_tile)]])
 	player.roll(dir)
-	
-	
-#	player.get_node("Mesh").roll(dir)
-#	player.roll(dir)
