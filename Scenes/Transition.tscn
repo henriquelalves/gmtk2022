@@ -196,42 +196,7 @@ tracks/2/keys = {
 
 [node name="Transition" type="Spatial"]
 script = ExtResource( 3 )
-dices = [ NodePath("Mesh0"), NodePath("Mesh"), NodePath("Mesh2"), NodePath("Mesh3"), NodePath("Mesh4"), NodePath("Mesh5"), NodePath("Mesh6") ]
-
-[node name="Mesh0" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3316, 0.5, 1.03296 )
-visible = false
-
-[node name="FaceUp" type="MeshInstance" parent="Mesh0"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.5, 0 )
-material_override = ExtResource( 9 )
-mesh = SubResource( 5 )
-material/0 = null
-
-[node name="FaceDown" type="MeshInstance" parent="Mesh0"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.5, 0 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 6 )
-
-[node name="FaceRight" type="MeshInstance" parent="Mesh0"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5, 0, 0 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 7 )
-
-[node name="FaceLeft" type="MeshInstance" parent="Mesh0"]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.5, 0, 0 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 8 )
-
-[node name="FaceForward" type="MeshInstance" parent="Mesh0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 9 )
-
-[node name="FaceBackward" type="MeshInstance" parent="Mesh0"]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -0.5 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 10 )
+dices = [ NodePath("Mesh"), NodePath("Mesh2"), NodePath("Mesh3"), NodePath("Mesh4"), NodePath("Mesh5"), NodePath("Mesh6") ]
 
 [node name="Mesh" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.67083, 0.5, 1.03296 )
@@ -449,7 +414,6 @@ pixel_size = 0.03
 texture = ExtResource( 1 )
 
 [node name="Pitch" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 script = ExtResource( 2 )
 
 [node name="Yaw" type="Spatial" parent="Pitch"]

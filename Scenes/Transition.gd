@@ -11,7 +11,8 @@ func _ready():
 	prev_stage = Global.current_stage - 1
 	next_stage = Global.current_stage
 	
-	get_node(dices[prev_stage+1]).show()
+	if prev_stage >= 0:
+		get_node(dices[prev_stage]).show()
 	
 	if Global.turns > 0:
 		if prev_stage == 5:
@@ -44,16 +45,19 @@ func _input(event):
 
 func animate_next_stage():
 	var pos0 = $UIController/ArmPivot.rect_position
-	var pos1 = camera.unproject_position(get_node(dices[prev_stage+1]).translation)
-	var pos2 = camera.unproject_position(get_node(dices[next_stage+1]).translation)
+	var pos1 = null
+	if prev_stage >= 0:
+		pos1 = camera.unproject_position(get_node(dices[prev_stage]).translation)
+	var pos2 = camera.unproject_position(get_node(dices[next_stage]).translation)
 	
 	yield(get_tree().create_timer(1), "timeout")
-	tween_pos(pos1)
-	yield(get_tree().create_timer(1), "timeout")
-	get_node(dices[prev_stage+1]).hide()
+	if pos1 != null:
+		tween_pos(pos1)
+		yield(get_tree().create_timer(1), "timeout")
+		get_node(dices[prev_stage]).hide()
 	tween_pos(pos2)
 	yield(get_tree().create_timer(1), "timeout")
-	get_node(dices[next_stage+1]).show()
+	get_node(dices[next_stage]).show()
 	tween_pos(pos0)
 
 func tween_pos(pos):

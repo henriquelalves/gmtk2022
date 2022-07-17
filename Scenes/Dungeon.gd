@@ -50,6 +50,15 @@ func end_animation():
 	yield(get_tree().create_timer(2), "timeout")
 	next_stage()
 
+func game_over_animation():
+	block_input = true
+	$UIController.hand_animation()
+	yield(get_tree().create_timer(1.1), "timeout")
+	player.hide()
+	yield(get_tree().create_timer(2), "timeout")
+	Global.current_stage += 1
+	get_tree().change_scene("res://Scenes/Transition.tscn")
+
 func set_tile(entity, tile):
 	if not entities_tiles.has(entity):
 		entities_tiles[entity] = tile
@@ -68,7 +77,6 @@ func kill_entity(entity):
 func build_floor():
 	player = Player.instance()
 	camera.follow(player)
-
 	Builder.build(player, self)
 
 func _process(delta):
@@ -154,6 +162,8 @@ func process_turn_logic():
 		actionable.play_actions()
 
 	Global.turns -= 1
+	if Global.turns <= 0:
+		game_over_animation()
 
 func _input(event):
 	if block_input: return
