@@ -117,23 +117,22 @@ func build(player : Entity, dungeon):
 func build_obstacle(pos : Vector2, dungeon):
 	var object = Obstacle.instance()
 	dungeon.add_child(object)
-	dungeon.set_tile(object, pos)
+	dungeon.set_tile(object, pos.round())
 
 func build_plate_damage(pos : Vector2, dungeon):
 	var object = PlateDamage.instance()
 	dungeon.add_child(object)
-	dungeon.set_tile(object, pos)
+	dungeon.set_tile(object, pos.round())
 
 func build_crystal(pos_crystal : Vector2, pos_key : Vector2, dungeon):
 	var crystal = Crystal.instance()
+	dungeon.add_child(crystal)
+	dungeon.set_tile(crystal, pos_crystal.round())
+
 	var key = PlateKey.instance()
 	key.set_crystal(crystal)
-
-	dungeon.add_child(crystal)
 	dungeon.add_child(key)
-
-	dungeon.set_tile(crystal, pos_crystal)
-	dungeon.set_tile(key, pos_key)
+	dungeon.tiles_floor[pos_key.round()] = key
 
 func build_divider(pos : Vector2, dir : Vector2, count : int, dungeon):
 	if count == 3:
