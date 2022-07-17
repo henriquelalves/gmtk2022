@@ -124,7 +124,7 @@ func process_turn_logic():
 			if monster.health - top <= 0:
 				monster.alive = false
 				monster.add_action("cor_dies", [])
-				Global.turns += int(player.get_upper_face())
+				Global.turns += int(player.get_upper_face()) * 2
 				kill_entity(monster)
 				ui_controller.on_monster_killed(monster.translation, player.get_upper_face())
 			else:
