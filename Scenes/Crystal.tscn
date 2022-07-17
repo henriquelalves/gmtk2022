@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/Crystal.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Environment/crystal.gltf" type="PackedScene" id=2]
+[ext_resource path="res://Assets/blob_shadow.png" type="Texture" id=3]
 
 [sub_resource type="PrismMesh" id=3]
 size = Vector3( 1, 1, 1 )
@@ -24,6 +25,18 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 0.594604, 0.392292 ),
 "update": 0,
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0.64478, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite3D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 2.5, 2.5, 1 ), Vector3( 2, 2, 1 ) ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -81,6 +94,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Vector3( 0, 0, 0 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite3D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 2.5, 2.5, 1 ) ]
+}
 
 [node name="Crystal" type="Spatial"]
 script = ExtResource( 1 )
@@ -100,3 +125,8 @@ transform = Transform( 0.374, 0, 0, 0, 0.314, 0, 0, 0, 0.25, 0, 0, 0 )
 anims/Activate = SubResource( 4 )
 anims/Active = SubResource( 5 )
 anims/RESET = SubResource( 6 )
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 2.5, 0, 0, 0, -1.09278e-07, -1, 0, 2.5, -4.37114e-08, 0, 0.001, 0 )
+modulate = Color( 0, 0, 0, 0.435294 )
+texture = ExtResource( 3 )
