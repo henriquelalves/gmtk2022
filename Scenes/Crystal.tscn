@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/Crystal.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Environment/crystal.gltf" type="PackedScene" id=2]
 [ext_resource path="res://Assets/blob_shadow.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sound/crystal.wav" type="AudioStream" id=4]
 
 [sub_resource type="PrismMesh" id=3]
 size = Vector3( 1, 1, 1 )
@@ -130,3 +131,8 @@ anims/RESET = SubResource( 6 )
 transform = Transform( 2.5, 0, 0, 0, -1.09278e-07, -1, 0, 2.5, -4.37114e-08, 0, 0.001, 0 )
 modulate = Color( 0, 0, 0, 0.435294 )
 texture = ExtResource( 3 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -20.0
+pitch_scale = 0.7

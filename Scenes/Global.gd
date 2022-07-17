@@ -7,7 +7,7 @@ onready var turns = STARTING_TURNS setget set_turns
 onready var current_stage = 0 setget set_stage
 onready var active_crystals = 0 setget set_crystals
 onready var max_crystals = 0
-onready var onboarding = true
+onready var onboarding = false
 
 signal update_ui
 
