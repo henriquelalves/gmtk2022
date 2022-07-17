@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Scenes/Dungeon.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/CameraControl.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Assets/AlegreyaSansSC-ExtraBold.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Scenes/ScoreParticle.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Assets/arm.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Environment/BG-tiled.png" type="Texture" id=8]
 
 [sub_resource type="ProceduralSky" id=2]
 
@@ -305,11 +306,13 @@ light_energy = 0.5
 layer = -1
 
 [node name="Cleyton" type="TextureRect" parent="Background"]
+modulate = Color( 0.690196, 0.494118, 0.768627, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_rotation = -0.0481524
-texture = ExtResource( 3 )
+texture = ExtResource( 8 )
 expand = true
+stretch_mode = 2
 
 [node name="UIController" type="CanvasLayer" parent="."]
 script = ExtResource( 4 )
