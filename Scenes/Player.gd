@@ -141,7 +141,7 @@ func cor_shake(args : Array):
 	var time = 0
 
 	var zero = Vector3(0, 0.5, 0)
-	var intensity = 0.02
+	var intensity = 0.03
 
 	while true:
 		time = min(time + get_process_delta_time(), duration)

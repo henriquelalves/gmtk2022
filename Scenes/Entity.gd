@@ -50,7 +50,7 @@ func cor_shake(args : Array):
 	var time = 0
 
 	var zero = translation
-	var intensity = 0.02
+	var intensity = 0.03
 
 	while true:
 		time = min(time + get_process_delta_time(), duration)

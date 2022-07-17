@@ -1,11 +1,11 @@
 [gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/Player.gd" type="Script" id=1]
+[ext_resource path="res://Assets/2_dots_blue.png" type="Texture" id=2]
 [ext_resource path="res://Assets/5_dots.png" type="Texture" id=3]
 [ext_resource path="res://Assets/DiceFaceMaterial.tres" type="Material" id=4]
-[ext_resource path="res://Assets/3_dots.png" type="Texture" id=5]
+[ext_resource path="res://Assets/3_dots_blue.png" type="Texture" id=5]
 [ext_resource path="res://Assets/4_dots.png" type="Texture" id=6]
-[ext_resource path="res://Assets/2_dots.png" type="Texture" id=7]
 [ext_resource path="res://Assets/6_dots.png" type="Texture" id=8]
 
 [sub_resource type="QuadMesh" id=5]
@@ -14,7 +14,7 @@
 albedo_texture = ExtResource( 8 )
 
 [sub_resource type="SpatialMaterial" id=7]
-albedo_texture = ExtResource( 7 )
+albedo_texture = ExtResource( 2 )
 
 [sub_resource type="SpatialMaterial" id=8]
 albedo_texture = ExtResource( 3 )

@@ -3,15 +3,16 @@
 [ext_resource path="res://Scenes/PlateKey.gd" type="Script" id=1]
 
 [sub_resource type="CubeMesh" id=1]
-size = Vector3( 0.9, 0.05, 1 )
+size = Vector3( 1, 0.05, 1 )
 
 [sub_resource type="SpatialMaterial" id=2]
-albedo_color = Color( 0.34902, 0.541176, 0.835294, 1 )
+resource_local_to_scene = true
+albedo_color = Color( 0.231373, 0.654902, 0.839216, 1 )
 
 [node name="PlateKey" type="Spatial"]
 script = ExtResource( 1 )
 valid_symbols = [ "1", "2", "3" ]
-door_path = null
+active_color = Color( 0.290196, 0.415686, 0.572549, 1 )
 
 [node name="Mesh" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 0 )
