@@ -188,9 +188,9 @@ func _input(event):
 			input = Vector2(+1,0)
 		KEY_LEFT:
 			input = Vector2(-1,0)
-		KEY_ESCAPE:
-			Global.turns = Global.STARTING_TURNS
-			get_tree().change_scene("res://Scenes/Dungeon.tscn")
+#		KEY_ESCAPE:
+#			Global.turns = Global.STARTING_TURNS
+#			get_tree().change_scene("res://Scenes/Dungeon.tscn")
 
 func move_entity(entity : Entity, dir : Vector2):
 	var cur_tile = entities_tiles[entity]
