@@ -170,17 +170,29 @@ func choose_divider() -> int:
 
 	return Divider.NONE
 
-func build_layout(corner : Vector2, crystals : int, current_stage : int,  dungeon):
+func build_layout(corner : Vector2, crystals : int, current_stage : int, dungeon):
+	var phi = 0
+	match randi() % 4:
+		1:
+			corner += Vector2(room_size - 1, 0)
+			phi = PI / 2
+		2:
+			corner += Vector2(room_size - 1, room_size - 1)
+			phi = PI
+		3:
+			corner += Vector2(0, room_size - 1)
+			phi = PI * 3 / 2
+
 	match choose_layout(current_stage):
 		Layout.EXAMPLE:
-			return build_layout_example(corner, crystals, dungeon)
+			return build_layout_example(corner, phi, crystals, dungeon)
 
-func build_layout_example(corner : Vector2, crystals : int, dungeon):
+func build_layout_example(corner : Vector2, phi : float, crystals : int, dungeon):
 	if crystals >= 1:
-		build_crystal(corner + Vector2(2, 2), corner + Vector2(2, 3), dungeon)
+		build_crystal(corner + Vector2(2, 2).rotated(phi), corner + Vector2(2, 3).rotated(phi), dungeon)
 
 	if crystals >= 2:
-		build_crystal(corner + Vector2(4, 2), corner + Vector2(4, 3), dungeon)
+		build_crystal(corner + Vector2(4, 2).rotated(phi), corner + Vector2(4, 3).rotated(phi), dungeon)
 
 	return corner
 
