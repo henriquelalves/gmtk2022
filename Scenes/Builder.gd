@@ -1,10 +1,16 @@
 extends Node
 
 const Obstacle = preload("res://Scenes/Obstacle.tscn")
+const Crystal = preload("res://Scenes/Crystal.tscn")
+
 const PlateBounce = preload("res://Scenes/PlateBounce.tscn")
 const PlateDamage = preload("res://Scenes/PlateDamage.tscn")
 const PlateKey = preload("res://Scenes/PlateKey.tscn")
-const Crystal = preload("res://Scenes/Crystal.tscn")
+
+const MonsterIdle = preload("res://Scenes/MonsterIdle.tscn")
+const MonsterRandCardinal = preload("res://Scenes/MonsterRandCardinal.tscn")
+const MonsterRandom = preload("res://Scenes/MonsterRandom.tscn")
+const MonsterSquare = preload("res://Scenes/MonsterSquare.tscn")
 
 const room_size = 6
 
@@ -121,28 +127,44 @@ func build(player : Entity, dungeon):
 	for key in dungeon.tiles_floor:
 		dungeon.tiles_floor[key].translation = dungeon.tile_to_pos(key)
 
-func add_entity(scene : PackedScene, pos : Vector2, dungeon) -> Node:
+func place_entity(scene : PackedScene, pos : Vector2, dungeon) -> Node:
 	var instance = scene.instance()
 	dungeon.set_tile(instance, pos.round())
 	dungeon.add_child(instance)
 	return instance
 
-func add_floor(scene : PackedScene, pos : Vector2, dungeon) -> Node:
+func place_floor(scene : PackedScene, pos : Vector2, dungeon) -> Node:
 	var instance = scene.instance()
 	dungeon.tiles_floor[pos.round()] = instance
 	dungeon.add_child(instance)
 	return instance
 
 func build_obstacle(pos : Vector2, dungeon):
-	add_entity(Obstacle, pos, dungeon)
-
-func build_plate_damage(pos : Vector2, dungeon):
-	add_floor(PlateDamage, pos, dungeon)
+	place_entity(Obstacle, pos, dungeon)
 
 func build_crystal(pos_crystal : Vector2, pos_key : Vector2, dungeon):
-	var crystal = add_entity(Crystal, pos_crystal, dungeon)
-	var key = add_floor(PlateKey, pos_key, dungeon)
+	var crystal = place_entity(Crystal, pos_crystal, dungeon)
+	var key = place_floor(PlateKey, pos_key, dungeon)
 	key.set_crystal(crystal)
+
+func build_plate_bounce(pos : Vector2, cardinal : int, dungeon):
+	var plate_bounce = place_floor(PlateBounce, pos, dungeon)
+	plate_bounce.set_cardinal(cardinal)
+
+func build_plate_damage(pos : Vector2, dungeon):
+	place_floor(PlateDamage, pos, dungeon)
+
+func build_monster_idle(pos : Vector2, dungeon):
+	place_entity(MonsterIdle, pos, dungeon)
+
+func build_monster_rand_cardinal(pos : Vector2, dungeon):
+	place_entity(MonsterRandCardinal, pos, dungeon)
+
+func build_monster_random(pos : Vector2, dungeon):
+	place_entity(MonsterRandom, pos, dungeon)
+
+func build_monster_square(pos : Vector2, dungeon):
+	place_entity(MonsterSquare, pos, dungeon)
 
 class Space:
 	var origin : Vector2
@@ -157,14 +179,30 @@ class Space:
 	func pos(delta : Vector2) -> Vector2:
 		return origin + delta.rotated(phi)
 
-	func build_obstacle(pos : Vector2):
-		Builder.build_obstacle(pos(pos), dungeon)
+	func build_obstacle(delta : Vector2):
+		Builder.build_obstacle(pos(delta), dungeon)
 
-	func build_plate_damage(pos : Vector2):
-		Builder.build_plate_damage(pos(pos), dungeon)
+	func build_crystal(delta_crystal : Vector2, delta_key : Vector2):
+		Builder.build_crystal(pos(delta_crystal), pos(delta_key), dungeon)
 
-	func build_crystal(pos_crystal : Vector2, pos_key : Vector2):
-		Builder.build_crystal(pos(pos_crystal), pos(pos_key), dungeon)
+	func build_plate_bounce(delta : Vector2, cardinal : int):
+		cardinal = round(cardinal + phi / PI * 2)
+		Builder.build_plate_bounce(pos(delta), cardinal % 4, dungeon)
+
+	func build_plate_damage(delta : Vector2):
+		Builder.build_plate_damage(pos(delta), dungeon)
+
+	func build_monster_idle(delta : Vector2):
+		Builder.build_monster_idle(pos(delta), dungeon)
+
+	func build_monster_rand_cardinal(delta : Vector2):
+		Builder.build_monster_rand_cardinal(pos(delta), dungeon)
+
+	func build_monster_random(delta : Vector2):
+		Builder.build_monster_random(pos(delta), dungeon)
+
+	func build_monster_square(delta : Vector2):
+		Builder.build_monster_square(pos(delta), dungeon)
 
 func build_divider(pos : Vector2, dir : Vector2, count : int, dungeon):
 	if count == 3:
@@ -219,17 +257,96 @@ func build_layout(corner : Vector2, crystals : int, current_stage : int, dungeon
 		Layout.TUTORIAL:
 			return build_layout_tutorial(crystals, space)
 
+		Layout.EASY_1:
+			return build_layout_easy_1(crystals, space)
+
+		Layout.EASY_2:
+			return build_layout_easy_2(crystals, space)
+
+		Layout.EASY_3:
+			return build_layout_easy_3(crystals, space)
+
+		Layout.NORMAL_1:
+			return build_layout_normal_1(crystals, space)
+
+		Layout.NORMAL_2:
+			return build_layout_normal_2(crystals, space)
+
 		_:
 			return build_layout_tutorial(crystals, space)
 
 func build_layout_tutorial(crystals : int, space : Space):
+	space.build_crystal(Vector2(2, 4), Vector2(3, 4))
+	space.build_monster_idle(Vector2(3, 2))
+	return space.pos(Vector2(2, 1))
+
+func build_layout_easy_1(crystals : int, space : Space):
 	if crystals >= 1:
-		space.build_crystal(Vector2(2, 2), Vector2(2, 3))
+		space.build_crystal(Vector2(3, 2), Vector2(1, 4))
 
 	if crystals >= 2:
-		space.build_crystal(Vector2(4, 2), Vector2(4, 3))
+		space.build_crystal(Vector2(4, 4), Vector2(4, 2))
 
-	return space.pos(Vector2.ZERO)
+	space.build_monster_idle(Vector2(3, 4))
+	space.build_plate_damage(Vector2(1, 3))
+
+	return space.pos(Vector2(3, 1))
+
+func build_layout_easy_2(crystals : int, space : Space):
+	if crystals >= 1:
+		space.build_crystal(Vector2(0, 5), Vector2(2, 5))
+
+	if crystals >= 2:
+		space.build_crystal(Vector2(5, 5), Vector2(3, 5))
+
+	space.build_monster_idle(Vector2(1, 1))
+	space.build_monster_rand_cardinal(Vector2(3, 2))
+
+	return space.pos(Vector2(2, 0))
+
+func build_layout_easy_3(crystals : int, space : Space):
+	if crystals >= 1:
+		space.build_crystal(Vector2(2, 2), Vector2(1, 4))
+
+	if crystals >= 2:
+		space.build_crystal(Vector2(3, 3), Vector2(4, 1))
+
+	space.build_plate_damage(Vector2(2, 3))
+	space.build_plate_damage(Vector2(3, 2))
+	space.build_plate_bounce(Vector2(1, 3), 3)
+	space.build_plate_bounce(Vector2(4, 2), 1)
+
+	return space.pos(Vector2(0, 0))
+
+func build_layout_normal_1(crystals : int, space : Space):
+	if crystals >= 1:
+		space.build_crystal(Vector2(2, 1), Vector2(3, 5))
+
+	if crystals >= 2:
+		space.build_crystal(Vector2(2, 2), Vector2(0, 0))
+
+	space.build_monster_rand_cardinal(Vector2(3, 4))
+	space.build_monster_rand_cardinal(Vector2(4, 5))
+	space.build_monster_rand_cardinal(Vector2(0, 2))
+
+	return space.pos(Vector2(3, 3))
+
+func build_layout_normal_2(crystals : int, space : Space):
+	if crystals >= 1:
+		space.build_crystal(Vector2(3, 4), Vector2(2, 1))
+
+	if crystals >= 2:
+		space.build_crystal(Vector2(4, 2), Vector2(4, 4))
+
+	space.build_plate_bounce(Vector2(1, 3), 3)
+	space.build_plate_bounce(Vector2(2, 3), 0)
+	space.build_plate_bounce(Vector2(4, 1), 1)
+	space.build_plate_bounce(Vector2(3, 1), 1)
+
+	space.build_monster_random(Vector2(3, 2))
+	space.build_monster_random(Vector2(0, 1))
+
+	return space.pos(Vector2(1, 5))
 
 func choose_layout(current_stage : int) -> int:
 	var options = available_layouts[current_stage]
