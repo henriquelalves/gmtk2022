@@ -49,7 +49,7 @@ func cor_shake(args : Array):
 	var duration = args[0]
 	var time = 0
 
-	var zero = Vector3(0, 0.5, 0)
+	var zero = translation
 	var intensity = 0.02
 
 	while true:
