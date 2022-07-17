@@ -154,3 +154,7 @@ func cor_shake(args : Array):
 			break
 
 		yield(get_tree(), "idle_frame")
+
+func cor_damage(args : Array):
+	$Damage.play()
+	yield(cor_shake(args), "completed")

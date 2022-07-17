@@ -23,7 +23,7 @@ var tiles_floor = {}
 func _ready():
 	randomize()
 	build_floor()
-	
+
 	Global.active_crystals = 0
 	Global.max_crystals = get_tree().get_nodes_in_group("crystals").size()
 
@@ -35,11 +35,11 @@ func intro_animation():
 	$UIController.hand_animation()
 	yield(get_tree().create_timer(1.1), "timeout")
 	player.show()
-	
+
 	if Global.onboarding:
 		yield($UIController.on_onboarding(), "completed")
 		Global.onboarding = false
-	
+
 	block_input = false
 
 func end_animation():
@@ -81,7 +81,7 @@ func build_floor():
 
 func _process(delta):
 	if block_input: return
-	
+
 	var actionables = get_tree().get_nodes_in_group("actionables")
 	var idle = true
 
@@ -149,7 +149,7 @@ func process_turn_logic():
 			Monster.MonsterActionType.IDLE:
 				pass
 			Monster.MonsterActionType.ATTACK:
-				player.add_action("cor_shake", [0.2])
+				player.add_action("cor_damage", [0.2])
 				Global.turns -= 1
 			Monster.MonsterActionType.MOVE:
 				move_entity(monster, monster_action.dir)
@@ -167,7 +167,7 @@ func process_turn_logic():
 
 func _input(event):
 	if block_input: return
-	
+
 	if input != Vector2.ZERO:
 		return
 
