@@ -46,16 +46,23 @@ const divider_weight = {
 }
 
 enum Layout {
-	EXAMPLE
+	TUTORIAL,
+	EASY_1,
+	EASY_2,
+	EASY_3,
+	NORMAL_1,
+	NORMAL_2,
+	NORMAL_3,
+	HARD
 }
 
 const available_layouts = [
-	[Layout.EXAMPLE],
-	[Layout.EXAMPLE],
-	[Layout.EXAMPLE],
-	[Layout.EXAMPLE],
-	[Layout.EXAMPLE],
-	[Layout.EXAMPLE]
+	[Layout.TUTORIAL],
+	[Layout.EASY_1, Layout.EASY_2],
+	[Layout.EASY_1, Layout.EASY_2, Layout.EASY_3],
+	[Layout.EASY_2, Layout.EASY_3, Layout.NORMAL_1, Layout.NORMAL_2],
+	[Layout.NORMAL_1, Layout.NORMAL_2, Layout.NORMAL_3],
+	[Layout.NORMAL_1, Layout.NORMAL_2, Layout.NORMAL_3, Layout.HARD],
 ]
 
 func build(player : Entity, dungeon):
@@ -209,10 +216,13 @@ func build_layout(corner : Vector2, crystals : int, current_stage : int, dungeon
 
 	var space = Space.new(corner, phi, dungeon)
 	match choose_layout(current_stage):
-		Layout.EXAMPLE:
-			return build_layout_example(crystals, space)
+		Layout.TUTORIAL:
+			return build_layout_tutorial(crystals, space)
 
-func build_layout_example(crystals : int, space : Space):
+		_:
+			return build_layout_tutorial(crystals, space)
+
+func build_layout_tutorial(crystals : int, space : Space):
 	if crystals >= 1:
 		space.build_crystal(Vector2(2, 2), Vector2(2, 3))
 
@@ -222,13 +232,8 @@ func build_layout_example(crystals : int, space : Space):
 	return space.pos(Vector2.ZERO)
 
 func choose_layout(current_stage : int) -> int:
-	var sum = randf()
-	for option in available_layouts[current_stage]:
-		sum -= divider_weight[option]
-		if sum < 0:
-			return option
-
-	return Layout.EXAMPLE
+	var options = available_layouts[current_stage]
+	return options[randi() % options.size()]
 
 func randi_range(a : int, b : int) -> int:
 	return int(round(randf() * (b - a) + a))
