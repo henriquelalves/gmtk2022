@@ -110,7 +110,8 @@ func _process(delta):
 	process_turn_logic()
 
 func next_stage():
-	Global.turns += Global.BONUS_TURNS_STAGE_FINISH
+	if Global.current_stage < 5:
+		Global.turns += Global.BONUS_TURNS_STAGE_FINISH
 	Global.current_stage += 1
 	get_tree().change_scene("res://Scenes/Transition.tscn")
 
