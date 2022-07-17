@@ -34,6 +34,13 @@ func victory():
 
 func game_over():
 	yield(get_tree().create_timer(1),"timeout")
+	var pos = camera.unproject_position(get_node(dices[prev_stage]).translation)
+	$UIController/Explosion.position = pos
+	$UIController/Explosion.show()
+	$UIController/Explosion/AnimationPlayer.play("Explode")
+	yield(get_tree().create_timer(0.1),"timeout")
+	get_node(dices[prev_stage]).hide()
+	yield(get_tree().create_timer(1),"timeout")
 	$UIController/GameOver/AnimationPlayer.play("FadeIn")
 	yield(get_tree().create_timer(1),"timeout")
 	set_process_input(true)

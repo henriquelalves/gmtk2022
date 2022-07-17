@@ -1,10 +1,11 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Assets/transition.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/CameraControl.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/Transition.gd" type="Script" id=3]
 [ext_resource path="res://Assets/joinha.png" type="Texture" id=4]
 [ext_resource path="res://Assets/AlegreyaSansSC-ExtraBold.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Assets/exp.png" type="Texture" id=6]
 [ext_resource path="res://Assets/arm.png" type="Texture" id=7]
 [ext_resource path="res://Assets/3_dots.png" type="Texture" id=8]
 [ext_resource path="res://Assets/DiceFaceMaterial.tres" type="Material" id=9]
@@ -192,6 +193,85 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ true ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "Explode"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 15 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 5, 5 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=18]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
 }
 
 [node name="Transition" type="Spatial"]
@@ -528,5 +608,16 @@ expand = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/Victory"]
 anims/FadeIn = SubResource( 15 )
 anims/RESET = SubResource( 16 )
+
+[node name="Explosion" type="Sprite" parent="UIController"]
+visible = false
+scale = Vector2( 1e-05, 1e-05 )
+texture = ExtResource( 6 )
+hframes = 4
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/Explosion"]
+anims/Explode = SubResource( 17 )
+anims/RESET = SubResource( 18 )
 
 [node name="Tween" type="Tween" parent="."]
