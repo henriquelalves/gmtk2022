@@ -39,6 +39,8 @@ var symbols = ['1', '3', '5', '2', '4', '6']
 var side = 0
 var spin = 0
 
+signal damaged(damage)
+
 func get_top() -> String:
 	return symbols[side]
 
@@ -157,4 +159,5 @@ func cor_shake(args : Array):
 
 func cor_damage(args : Array):
 	$Damage.play()
+	emit_signal("damaged", args[1])
 	yield(cor_shake(args), "completed")

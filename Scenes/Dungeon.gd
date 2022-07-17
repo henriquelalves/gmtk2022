@@ -79,6 +79,7 @@ func damage_player(damage):
 
 func build_floor():
 	player = Player.instance()
+	player.connect("damaged", self, "damage_player")
 	camera.follow(player)
 	Builder.build(player, self)
 
@@ -152,8 +153,7 @@ func process_turn_logic():
 			Monster.MonsterActionType.IDLE:
 				pass
 			Monster.MonsterActionType.ATTACK:
-				player.add_action("cor_damage", [0.2])
-				damage_player(1)
+				player.add_action("cor_damage", [0.2, 1])
 				Global.turns -= 1
 			Monster.MonsterActionType.MOVE:
 				move_entity(monster, monster_action.dir)

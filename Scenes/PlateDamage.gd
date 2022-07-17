@@ -3,8 +3,7 @@ extends Plate
 func activate(entity : Entity, dungeon):
 	if entity is Player:
 		var damage = int(entity.get_top())
-		entity.add_action("cor_damage", [0.2])
-		dungeon.damage_player(damage)
+		entity.add_action("cor_damage", [0.2, damage])
 		Global.turns -= damage
 		return
 
