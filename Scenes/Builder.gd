@@ -114,25 +114,50 @@ func build(player : Entity, dungeon):
 	for key in dungeon.tiles_floor:
 		dungeon.tiles_floor[key].translation = dungeon.tile_to_pos(key)
 
+func add_entity(scene : PackedScene, pos : Vector2, dungeon) -> Node:
+	var instance = scene.instance()
+	dungeon.set_tile(instance, pos.round())
+	dungeon.add_child(instance)
+	return instance
+
+func add_floor(scene : PackedScene, pos : Vector2, dungeon) -> Node:
+	var instance = scene.instance()
+	dungeon.tiles_floor[pos.round()] = instance
+	dungeon.add_child(instance)
+	return instance
+
 func build_obstacle(pos : Vector2, dungeon):
-	var object = Obstacle.instance()
-	dungeon.add_child(object)
-	dungeon.set_tile(object, pos.round())
+	add_entity(Obstacle, pos, dungeon)
 
 func build_plate_damage(pos : Vector2, dungeon):
-	var object = PlateDamage.instance()
-	dungeon.add_child(object)
-	dungeon.set_tile(object, pos.round())
+	add_floor(PlateDamage, pos, dungeon)
 
 func build_crystal(pos_crystal : Vector2, pos_key : Vector2, dungeon):
-	var crystal = Crystal.instance()
-	dungeon.add_child(crystal)
-	dungeon.set_tile(crystal, pos_crystal.round())
-
-	var key = PlateKey.instance()
+	var crystal = add_entity(Crystal, pos_crystal, dungeon)
+	var key = add_floor(PlateKey, pos_key, dungeon)
 	key.set_crystal(crystal)
-	dungeon.add_child(key)
-	dungeon.tiles_floor[pos_key.round()] = key
+
+class Space:
+	var origin : Vector2
+	var phi : float
+	var dungeon
+
+	func _init(origin : Vector2, phi : float, dungeon):
+		self.origin = origin
+		self.phi = phi
+		self.dungeon = dungeon
+
+	func pos(delta : Vector2) -> Vector2:
+		return origin + delta.rotated(phi)
+
+	func build_obstacle(pos : Vector2):
+		Builder.build_obstacle(pos(pos), dungeon)
+
+	func build_plate_damage(pos : Vector2):
+		Builder.build_plate_damage(pos(pos), dungeon)
+
+	func build_crystal(pos_crystal : Vector2, pos_key : Vector2):
+		Builder.build_crystal(pos(pos_crystal), pos(pos_key), dungeon)
 
 func build_divider(pos : Vector2, dir : Vector2, count : int, dungeon):
 	if count == 3:
@@ -182,18 +207,19 @@ func build_layout(corner : Vector2, crystals : int, current_stage : int, dungeon
 			corner += Vector2(0, room_size - 1)
 			phi = PI * 3 / 2
 
+	var space = Space.new(corner, phi, dungeon)
 	match choose_layout(current_stage):
 		Layout.EXAMPLE:
-			return build_layout_example(corner, phi, crystals, dungeon)
+			return build_layout_example(crystals, space)
 
-func build_layout_example(corner : Vector2, phi : float, crystals : int, dungeon):
+func build_layout_example(crystals : int, space : Space):
 	if crystals >= 1:
-		build_crystal(corner + Vector2(2, 2).rotated(phi), corner + Vector2(2, 3).rotated(phi), dungeon)
+		space.build_crystal(Vector2(2, 2), Vector2(2, 3))
 
 	if crystals >= 2:
-		build_crystal(corner + Vector2(4, 2).rotated(phi), corner + Vector2(4, 3).rotated(phi), dungeon)
+		space.build_crystal(Vector2(4, 2), Vector2(4, 3))
 
-	return corner
+	return space.pos(Vector2.ZERO)
 
 func choose_layout(current_stage : int) -> int:
 	var sum = randf()
