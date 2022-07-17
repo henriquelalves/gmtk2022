@@ -21,5 +21,6 @@ func on_monster_killed(monster_pos, score):
 		score_particle.rect_position = main_camera.unproject_position(monster_pos)
 		score_particle.animate()
 		yield(get_tree().create_timer(0.1),"timeout")
-	
-	
+
+func hand_animation():
+	$AnimationPlayer.play("HandMoving")

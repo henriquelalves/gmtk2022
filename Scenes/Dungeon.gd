@@ -13,6 +13,7 @@ onready var player : Entity = null
 onready var ui_controller = $UIController
 
 var input : Vector2
+var block_input : bool = false
 
 var tiles_entities = {}
 var entities_tiles = {}
@@ -25,6 +26,24 @@ func _ready():
 	
 	Global.active_crystals = 0
 	Global.max_crystals = get_tree().get_nodes_in_group("crystals").size()
+
+	intro_animation()
+
+func intro_animation():
+	block_input = true
+	player.hide()
+	$UIController.hand_animation()
+	yield(get_tree().create_timer(1.1), "timeout")
+	player.show()
+	block_input = false
+
+func end_animation():
+	block_input = true
+	$UIController.hand_animation()
+	yield(get_tree().create_timer(1.1), "timeout")
+	player.hide()
+	yield(get_tree().create_timer(2), "timeout")
+	next_stage()
 
 func set_tile(entity, tile):
 	if not entities_tiles.has(entity):
@@ -48,6 +67,8 @@ func build_floor():
 	Builder.build(player, self)
 
 func _process(delta):
+	if block_input: return
+	
 	var actionables = get_tree().get_nodes_in_group("actionables")
 	var idle = true
 
@@ -64,7 +85,7 @@ func _process(delta):
 			next_stage = false
 			break
 	if next_stage:
-		next_stage()
+		end_animation()
 
 	if not idle or input == Vector2.ZERO:
 		return
@@ -130,6 +151,8 @@ func process_turn_logic():
 	Global.turns -= 1
 
 func _input(event):
+	if block_input: return
+	
 	if input != Vector2.ZERO:
 		return
 
