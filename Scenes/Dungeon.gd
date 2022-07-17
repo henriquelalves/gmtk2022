@@ -118,6 +118,7 @@ func process_turn_logic():
 	# player attack
 	var cur_tile = entities_tiles[player]
 	var new_tile = cur_tile + input
+	new_tile = new_tile.round()
 
 	# simulate roll to attack
 	player.roll(input)
@@ -194,7 +195,7 @@ func _input(event):
 func move_entity(entity : Entity, dir : Vector2):
 	var cur_tile = entities_tiles[entity]
 	var new_tile = cur_tile + dir
-	new_tile = Vector2(round(new_tile.x), round(new_tile.y))
+	new_tile = new_tile.round()
 
 	if tiles_entities.has(new_tile):
 		if entity.has_method("cor_shake"):
