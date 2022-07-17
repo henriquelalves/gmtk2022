@@ -10,6 +10,12 @@ onready var max_crystals = 0
 
 signal update_ui
 
+func reset():
+	turns = STARTING_TURNS
+	current_stage = 0
+	active_crystals = 0
+	max_crystals = 0
+
 func set_turns(t):
 	turns = t
 	emit_signal("update_ui")

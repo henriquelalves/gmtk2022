@@ -7,14 +7,40 @@ onready var prev_stage = 0
 onready var next_stage = 0
 
 func _ready():
+	set_process_input(false)
 	prev_stage = Global.current_stage - 1
 	next_stage = Global.current_stage
 	
 	get_node(dices[prev_stage+1]).show()
 	
-	yield(animate_next_stage(), "completed")
-	yield(get_tree().create_timer(2), "timeout")
-	get_tree().change_scene("res://Scenes/Dungeon.tscn")
+	if Global.turns > 0:
+		if prev_stage == 5:
+			victory()
+		else:
+			yield(animate_next_stage(), "completed")
+			yield(get_tree().create_timer(2), "timeout")
+			get_tree().change_scene("res://Scenes/Dungeon.tscn")
+	else:
+		game_over()
+
+func victory():
+	$UIController/Victory/Label2.text = "You finished the game with %d turns remaining!" % Global.turns
+	
+	yield(get_tree().create_timer(1),"timeout")
+	$UIController/Victory/AnimationPlayer.play("FadeIn")
+	yield(get_tree().create_timer(1),"timeout")
+	set_process_input(true)
+
+func game_over():
+	yield(get_tree().create_timer(1),"timeout")
+	$UIController/GameOver/AnimationPlayer.play("FadeIn")
+	yield(get_tree().create_timer(1),"timeout")
+	set_process_input(true)
+
+func _input(event):
+	if event is InputEventKey and event.is_pressed():
+		Global.reset()
+		get_tree().change_scene("res://Scenes/Transition.tscn")
 
 func animate_next_stage():
 	var pos0 = $UIController/ArmPivot.rect_position
