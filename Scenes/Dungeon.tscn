@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Scenes/Dungeon.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/CameraControl.gd" type="Script" id=2]
@@ -278,6 +278,43 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=26]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="DynamicFont" id=29]
+size = 24
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 5 )
+
+[sub_resource type="Animation" id=27]
+resource_name = "FadeIn"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=28]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -678,6 +715,23 @@ valign = 1
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/OnboardingOverlay/Intro7"]
 anims/FadeIn = SubResource( 25 )
 anims/RESET = SubResource( 26 )
+
+[node name="SkipLabel" type="Label" parent="UIController/OnboardingOverlay"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = -96.0
+margin_right = 1067.0
+margin_bottom = -15.0
+custom_fonts/font = SubResource( 29 )
+text = "Press ESC to skip tutorial"
+valign = 2
+autowrap = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/OnboardingOverlay/SkipLabel"]
+anims/FadeIn = SubResource( 27 )
+anims/RESET = SubResource( 28 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/OnboardingOverlay"]
 anims/FadeIn = SubResource( 9 )

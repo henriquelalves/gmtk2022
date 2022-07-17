@@ -6,6 +6,8 @@ onready var particles = $Particles
 
 onready var activated_crystals
 
+onready var skip_all = false
+
 signal _skip_step
 
 func _ready():
@@ -42,6 +44,7 @@ func on_onboarding():
 	$OnboardingOverlay.show()
 	$OnboardingOverlay/AnimationPlayer.play("FadeIn")
 	yield($OnboardingOverlay/AnimationPlayer,"animation_finished")
+	show_skip()
 	yield(onboarding_step(1), "completed")
 	yield(onboarding_step(2), "completed")
 	yield(onboarding_step(3), "completed")
@@ -55,24 +58,32 @@ func on_onboarding():
 
 func _input(event):
 	if event is InputEventKey and event.is_pressed():
+		if event.scancode == KEY_ESCAPE:
+			skip_all = true
 		emit_signal("_skip_step")
 		
 
 func onboarding_step(i):
-	var intro = get_node("OnboardingOverlay/Intro%d" % i)
-	intro.show()
-	var intro_player = intro.get_node("AnimationPlayer")
-	intro_player.play("FadeIn")
-	yield(intro_player, "animation_finished")
-	
-	var timer = get_tree().create_timer(4)
-	timer.connect("timeout", self, "emit_signal", ["_skip_step"])
-	
-	yield(self, "_skip_step")
-	
-	if timer != null:
-		timer.disconnect("timeout", self, "emit_signal")
-	
-	intro_player.play_backwards("FadeIn")
-	yield(intro_player, "animation_finished")
-	intro.hide()
+	if not skip_all:
+		var intro = get_node("OnboardingOverlay/Intro%d" % i)
+		intro.show()
+		var intro_player = intro.get_node("AnimationPlayer")
+		intro_player.play("FadeIn")
+		yield(intro_player, "animation_finished")
+		
+		var timer = get_tree().create_timer(4)
+		timer.connect("timeout", self, "emit_signal", ["_skip_step"])
+		
+		yield(self, "_skip_step")
+		
+		if timer != null:
+			timer.disconnect("timeout", self, "emit_signal")
+		
+		intro_player.play_backwards("FadeIn")
+		yield(intro_player, "animation_finished")
+		intro.hide()
+	yield(get_tree(),"idle_frame")
+
+func show_skip():
+#	yield(get_tree().create_timer(1),"timeout")
+	$OnboardingOverlay/SkipLabel/AnimationPlayer.play("FadeIn")
