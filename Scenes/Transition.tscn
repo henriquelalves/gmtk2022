@@ -494,6 +494,7 @@ pixel_size = 0.03
 texture = ExtResource( 1 )
 
 [node name="Pitch" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6636, 0, 0 )
 script = ExtResource( 2 )
 
 [node name="Yaw" type="Spatial" parent="Pitch"]
