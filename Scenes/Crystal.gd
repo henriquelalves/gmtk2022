@@ -28,6 +28,10 @@ func cor_activate(args : Array):
 			break
 
 		yield(get_tree(), "idle_frame")
-
+	
+	$AnimationPlayer.play("Activate")
+	yield($AnimationPlayer,"animation_finished")
+	$AnimationPlayer.play("Active")
+	
 	is_active = true
 	Global.active_crystals += 1

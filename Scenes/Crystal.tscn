@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scenes/Crystal.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Environment/crystal.gltf" type="PackedScene" id=2]
@@ -9,6 +9,78 @@ size = Vector3( 1, 1, 1 )
 [sub_resource type="SpatialMaterial" id=2]
 resource_local_to_scene = true
 albedo_color = Color( 0.819608, 0.858824, 0.921569, 1 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "Activate"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("crystal:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.594604, 0.392292 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0.64478, 0 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Active"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("crystal:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2, 3 ),
+"transitions": PoolRealArray( -2, -2, -2, -2 ),
+"update": 0,
+"values": [ Vector3( 0, 0.64478, 0 ), Vector3( 0, 0.4, 0 ), Vector3( 0, 0.64478, 0 ), Vector3( 0, 0.4, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("crystal:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 360, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("crystal:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("crystal:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
 
 [node name="Crystal" type="Spatial"]
 script = ExtResource( 1 )
@@ -23,3 +95,8 @@ material/0 = SubResource( 2 )
 
 [node name="crystal" parent="." instance=ExtResource( 2 )]
 transform = Transform( 0.374, 0, 0, 0, 0.314, 0, 0, 0, 0.25, 0, 0, 0 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Activate = SubResource( 4 )
+anims/Active = SubResource( 5 )
+anims/RESET = SubResource( 6 )
