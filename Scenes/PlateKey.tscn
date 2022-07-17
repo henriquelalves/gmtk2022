@@ -1,13 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/PlateKey.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Environment/key-base.material" type="Material" id=2]
+[ext_resource path="res://Assets/Environment/keyplate.png" type="Texture" id=3]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 1, 0.05, 1 )
 
 [sub_resource type="SpatialMaterial" id=2]
 resource_local_to_scene = true
-albedo_color = Color( 0.231373, 0.654902, 0.839216, 1 )
+albedo_texture = ExtResource( 3 )
+uv1_scale = Vector3( 3, 2, 1 )
 
 [node name="PlateKey" type="Spatial"]
 script = ExtResource( 1 )
@@ -15,6 +18,11 @@ valid_symbols = [ "1", "2", "3" ]
 active_color = Color( 0.290196, 0.415686, 0.572549, 1 )
 
 [node name="Mesh" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 0 )
+transform = Transform( 0.753752, 0, 0, 0, 1.01597, 0, 0, 0, 0.753752, 0, 0.025, 0 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
+
+[node name="Mesh2" type="MeshInstance" parent="."]
+transform = Transform( 1.00044, 0, 0, 0, 0.387315, 0, 0, 0, 1.00044, 0, 0.0119091, 0 )
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )

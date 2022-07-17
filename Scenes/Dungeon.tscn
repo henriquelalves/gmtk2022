@@ -1,7 +1,8 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Scenes/Dungeon.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/CameraControl.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Environment/turn-icon.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/UIController.gd" type="Script" id=4]
 [ext_resource path="res://Assets/AlegreyaSansSC-ExtraBold.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://Scenes/ScoreParticle.tscn" type="PackedScene" id=6]
@@ -303,10 +304,16 @@ light_energy = 0.5
 [node name="UIController" type="CanvasLayer" parent="."]
 script = ExtResource( 4 )
 
+[node name="TextureRect" type="TextureRect" parent="UIController"]
+margin_right = 64.0
+margin_bottom = 64.0
+rect_rotation = -0.0481524
+texture = ExtResource( 3 )
+
 [node name="NumberOfTurns" type="Label" parent="UIController"]
-margin_left = 7.0
+margin_left = 67.0
 margin_top = 7.0
-margin_right = 291.0
+margin_right = 351.0
 margin_bottom = 56.0
 custom_fonts/font = SubResource( 5 )
 text = "Turns left: 20"
