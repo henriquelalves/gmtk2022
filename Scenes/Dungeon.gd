@@ -22,6 +22,9 @@ var tiles_floor = {}
 func _ready():
 	randomize()
 	build_floor()
+	
+	Global.active_crystals = 0
+	Global.max_crystals = get_tree().get_nodes_in_group("crystals").size()
 
 func set_tile(entity, tile):
 	if not entities_tiles.has(entity):

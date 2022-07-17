@@ -30,3 +30,4 @@ func cor_activate(args : Array):
 		yield(get_tree(), "idle_frame")
 
 	is_active = true
+	Global.active_crystals += 1
