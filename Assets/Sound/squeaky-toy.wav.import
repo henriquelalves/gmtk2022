@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/squeaky-toy.wav-c3d5382cc5fd5c9d8566f4aeb072a391.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/squeaky-toy.wav"
+dest_files=[ "res://.import/squeaky-toy.wav-c3d5382cc5fd5c9d8566f4aeb072a391.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

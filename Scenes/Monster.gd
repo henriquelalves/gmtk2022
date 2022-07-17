@@ -26,7 +26,6 @@ func cor_stomp(args : Array):
 
 func cor_dies(args : Array):
 	$AnimationPlayer.play("fucking_dies")
-	$FuckingDies.pitch_scale = 1.5 + randf()
 	$FuckingDies.play()
 	yield($AnimationPlayer, "animation_finished")
 	hide()
