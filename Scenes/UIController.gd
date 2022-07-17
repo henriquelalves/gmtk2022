@@ -48,6 +48,7 @@ func on_onboarding():
 	yield(onboarding_step(4), "completed")
 	yield(onboarding_step(5), "completed")
 	yield(onboarding_step(6), "completed")
+	yield(onboarding_step(7), "completed")
 	$OnboardingOverlay/AnimationPlayer.play_backwards("FadeIn")
 	yield($OnboardingOverlay/AnimationPlayer,"animation_finished")
 	$OnboardingOverlay.hide()

@@ -29,6 +29,7 @@ func cor_activate(args : Array):
 
 		yield(get_tree(), "idle_frame")
 	
+	$AudioStreamPlayer.play()
 	$AnimationPlayer.play("Activate")
 	yield($AnimationPlayer,"animation_finished")
 	$AnimationPlayer.play("Active")

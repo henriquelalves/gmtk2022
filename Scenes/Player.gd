@@ -93,6 +93,7 @@ func cor_move(args : Array): # args = [Vector3, float]
 			break
 
 		yield(get_tree(), "idle_frame")
+	$AudioStreamPlayer.play()
 
 func cor_half_move(args : Array): # args = [Vector3, float]
 	var pos_original = translation

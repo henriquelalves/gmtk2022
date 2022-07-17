@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Scenes/Dungeon.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/CameraControl.gd" type="Script" id=2]
@@ -17,6 +17,50 @@ background_sky = SubResource( 2 )
 background_color = Color( 0.1, 0.1, 0.1, 1 )
 ambient_light_color = Color( 1, 1, 1, 1 )
 dof_blur_far_amount = 0.06
+
+[sub_resource type="Animation" id=23]
+resource_name = "Default"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -300 ), Vector2( -128, -173 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1152, 1080 ) ]
+}
+
+[sub_resource type="Animation" id=24]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1152, 720 ) ]
+}
 
 [sub_resource type="DynamicFont" id=5]
 size = 48
@@ -216,6 +260,37 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ) ]
 }
 
+[sub_resource type="Animation" id=25]
+resource_name = "FadeIn"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=26]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
 [sub_resource type="Animation" id=9]
 resource_name = "FadeIn"
 length = 0.4
@@ -309,10 +384,18 @@ layer = -1
 modulate = Color( 0.690196, 0.494118, 0.768627, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = -300.0
+margin_right = 1152.0
+margin_bottom = 420.0
 rect_rotation = -0.0481524
 texture = ExtResource( 8 )
 expand = true
 stretch_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Background/Cleyton"]
+autoplay = "Default"
+anims/Default = SubResource( 23 )
+anims/RESET = SubResource( 24 )
 
 [node name="UIController" type="CanvasLayer" parent="."]
 script = ExtResource( 4 )
@@ -563,6 +646,37 @@ valign = 1
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/OnboardingOverlay/Intro6"]
 anims/FadeIn = SubResource( 21 )
 anims/RESET = SubResource( 22 )
+
+[node name="Intro7" type="Label" parent="UIController/OnboardingOverlay"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -554.0
+margin_top = 299.0
+margin_right = -125.0
+margin_bottom = 416.0
+custom_fonts/font = SubResource( 6 )
+text = "You gain 10 turns as bonus after each stage. Good luck!"
+valign = 2
+autowrap = true
+
+[node name="Up" type="Label" parent="UIController/OnboardingOverlay/Intro7"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -206.0
+margin_top = -30.0
+margin_right = -189.0
+margin_bottom = 7.0
+rect_rotation = 90.0938
+custom_fonts/font = SubResource( 6 )
+text = "<"
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/OnboardingOverlay/Intro7"]
+anims/FadeIn = SubResource( 25 )
+anims/RESET = SubResource( 26 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/OnboardingOverlay"]
 anims/FadeIn = SubResource( 9 )

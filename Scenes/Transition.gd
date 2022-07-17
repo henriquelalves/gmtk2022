@@ -38,6 +38,7 @@ func game_over():
 	$UIController/Explosion.position = pos
 	$UIController/Explosion.show()
 	$UIController/Explosion/AnimationPlayer.play("Explode")
+	$AudioExplosion.play()
 	yield(get_tree().create_timer(0.1),"timeout")
 	get_node(dices[prev_stage]).hide()
 	yield(get_tree().create_timer(1),"timeout")

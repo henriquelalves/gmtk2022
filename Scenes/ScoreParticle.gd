@@ -16,3 +16,6 @@ func animate():
 	
 	animation_player.add_animation("Animate", anim)
 	animation_player.play("Animate")
+	
+	yield(animation_player, "animation_finished")
+	$AudioStreamPlayer.play()
