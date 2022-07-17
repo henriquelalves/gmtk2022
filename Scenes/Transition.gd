@@ -15,6 +15,8 @@ func _ready():
 		get_node(dices[prev_stage]).show()
 	
 	if Global.turns > 0:
+		if Global.current_stage != 0:
+			$AudioFanfare.play()
 		if prev_stage == 5:
 			victory()
 		else:

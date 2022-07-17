@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Assets/transition.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/CameraControl.gd" type="Script" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Assets/4_dots.png" type="Texture" id=13]
 [ext_resource path="res://Assets/Sound/explosion.wav" type="AudioStream" id=14]
 [ext_resource path="res://Assets/2_dots_blue.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Sound/fanfare.wav" type="AudioStream" id=16]
 
 [sub_resource type="QuadMesh" id=5]
 
@@ -631,3 +632,7 @@ anims/RESET = SubResource( 18 )
 [node name="AudioExplosion" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 14 )
 volume_db = -20.0
+
+[node name="AudioFanfare" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+volume_db = -15.0
