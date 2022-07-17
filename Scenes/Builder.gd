@@ -45,15 +45,36 @@ const divider_weight = {
 	Divider.TRAP: 0.2
 }
 
+enum Layout {
+	EXAMPLE
+}
+
+const available_layouts = [
+	[Layout.EXAMPLE],
+	[Layout.EXAMPLE],
+	[Layout.EXAMPLE],
+	[Layout.EXAMPLE],
+	[Layout.EXAMPLE],
+	[Layout.EXAMPLE]
+]
+
 func build(player : Entity, dungeon):
-	var room_count = room_counts[Global.current_stage]
+	dungeon.add_child(player)
+
+	var current_stage = randi() % 6 # Global.current_stage
+
+	var room_count = room_counts[current_stage]
 	var start = randi() % 4
+	var spawn = (start + randi() % room_count) % 4
 
 	var divider_count = 0
+	var crystal_remainder = crystal_counts[current_stage]
+
 	var rooms = {}
 	for i in range(start, start + room_count):
 		rooms[room_positions[i % 4]] = true
 
+	var index = 0
 	for key in rooms:
 		var length = room_size + 1
 		var corner = key * length
@@ -77,27 +98,15 @@ func build(player : Entity, dungeon):
 		if rooms.has(key + Vector2(0, -1)):
 			divider_count = build_divider(corner, Vector2(1, 0), divider_count, dungeon)
 
-	var pos = Vector2(1, 1)
+		var crystal_min = max(crystal_remainder - 2 * (room_count - 1), 0)
+		var crystal_count = randi_range(crystal_min, min(crystal_remainder, 2))
 
-	dungeon.add_child(player)
-	dungeon.set_tile(player, pos)
+		var spawn_pos = build_layout(corner + Vector2.ONE, crystal_count, current_stage, dungeon)
+		if room_positions[spawn] == key:
+			dungeon.set_tile(player, spawn_pos)
 
-	var number_crystals = floor(Global.current_stage / 2.0) + 1
-	for i in range(number_crystals):
-		pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		while dungeon.tiles_entities.has(pos):
-			pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		var crystal = Crystal.instance()
-		dungeon.set_tile(crystal, pos)
-		dungeon.add_child(crystal)
-
-		pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		while dungeon.tiles_entities.has(pos) or dungeon.tiles_floor.has(pos):
-			pos = Vector2(randi()%8 - 4, randi()%8 - 4)
-		var plate_key = PlateKey.instance()
-		plate_key.set_crystal(crystal)
-		dungeon.tiles_floor[pos] = plate_key
-		dungeon.add_child(plate_key)
+		room_count -= 1
+		crystal_remainder -= crystal_count
 
 	for key in dungeon.tiles_entities:
 		dungeon.tiles_entities[key].translation = dungeon.tile_to_pos(key)
@@ -114,6 +123,17 @@ func build_plate_damage(pos : Vector2, dungeon):
 	var object = PlateDamage.instance()
 	dungeon.add_child(object)
 	dungeon.set_tile(object, pos)
+
+func build_crystal(pos_crystal : Vector2, pos_key : Vector2, dungeon):
+	var crystal = Crystal.instance()
+	var key = PlateKey.instance()
+	key.set_crystal(crystal)
+
+	dungeon.add_child(crystal)
+	dungeon.add_child(key)
+
+	dungeon.set_tile(crystal, pos_crystal)
+	dungeon.set_tile(key, pos_key)
 
 func build_divider(pos : Vector2, dir : Vector2, count : int, dungeon):
 	if count == 3:
@@ -149,3 +169,29 @@ func choose_divider() -> int:
 			return option
 
 	return Divider.NONE
+
+func build_layout(corner : Vector2, crystals : int, current_stage : int,  dungeon):
+	match choose_layout(current_stage):
+		Layout.EXAMPLE:
+			return build_layout_example(corner, crystals, dungeon)
+
+func build_layout_example(corner : Vector2, crystals : int, dungeon):
+	if crystals >= 1:
+		build_crystal(corner + Vector2(2, 2), corner + Vector2(2, 3), dungeon)
+
+	if crystals >= 2:
+		build_crystal(corner + Vector2(4, 2), corner + Vector2(4, 3), dungeon)
+
+	return corner
+
+func choose_layout(current_stage : int) -> int:
+	var sum = randf()
+	for option in available_layouts[current_stage]:
+		sum -= divider_weight[option]
+		if sum < 0:
+			return option
+
+	return Layout.EXAMPLE
+
+func randi_range(a : int, b : int) -> int:
+	return int(round(randf() * (b - a) + a))
