@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Scenes/Dungeon.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/CameraControl.gd" type="Script" id=2]
@@ -246,6 +246,37 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=22]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=25]
+resource_name = "FadeIn"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=26]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -615,6 +646,37 @@ valign = 1
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/OnboardingOverlay/Intro6"]
 anims/FadeIn = SubResource( 21 )
 anims/RESET = SubResource( 22 )
+
+[node name="Intro7" type="Label" parent="UIController/OnboardingOverlay"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -554.0
+margin_top = 299.0
+margin_right = -125.0
+margin_bottom = 416.0
+custom_fonts/font = SubResource( 6 )
+text = "You gain 10 turns as bonus after each stage. Good luck!"
+valign = 2
+autowrap = true
+
+[node name="Up" type="Label" parent="UIController/OnboardingOverlay/Intro7"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -206.0
+margin_top = -30.0
+margin_right = -189.0
+margin_bottom = 7.0
+rect_rotation = 90.0938
+custom_fonts/font = SubResource( 6 )
+text = "<"
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/OnboardingOverlay/Intro7"]
+anims/FadeIn = SubResource( 25 )
+anims/RESET = SubResource( 26 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/OnboardingOverlay"]
 anims/FadeIn = SubResource( 9 )
