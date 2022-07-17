@@ -74,6 +74,9 @@ func kill_entity(entity):
 	tiles_entities.erase(tile)
 	entities_tiles.erase(entity)
 
+func damage_player(damage):
+	ui_controller.on_damaged(damage, player.translation)
+
 func build_floor():
 	player = Player.instance()
 	camera.follow(player)
@@ -150,6 +153,7 @@ func process_turn_logic():
 				pass
 			Monster.MonsterActionType.ATTACK:
 				player.add_action("cor_damage", [0.2])
+				damage_player(1)
 				Global.turns -= 1
 			Monster.MonsterActionType.MOVE:
 				move_entity(monster, monster_action.dir)

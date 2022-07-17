@@ -2,8 +2,10 @@ extends Plate
 
 func activate(entity : Entity, dungeon):
 	if entity is Player:
+		var damage = int(entity.get_top())
 		entity.add_action("cor_damage", [0.2])
-		Global.turns -= int(entity.get_top())
+		dungeon.damage_player(damage)
+		Global.turns -= damage
 		return
 
 	if entity is Monster:

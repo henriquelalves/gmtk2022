@@ -4,6 +4,10 @@ onready var main_camera = get_viewport().get_camera()
 onready var ScoreParticle = preload("res://Scenes/ScoreParticle.tscn")
 onready var particles = $Particles
 
+onready var damage_control : Control = $Damage
+onready var damage_label : Label = $Damage/Label
+onready var damage_anim : AnimationPlayer = $Damage/AnimationPlayer
+
 onready var activated_crystals
 
 onready var skip_all = false
@@ -26,6 +30,11 @@ func on_monster_killed(monster_pos, score):
 		score_particle.animate()
 		yield(get_tree().create_timer(0.1),"timeout")
 
+func on_damaged(damage, player_pos):
+	damage_label.text = "%d" % -damage
+	damage_control.rect_position = main_camera.unproject_position(player_pos)
+	damage_anim.play("Fade")
+
 func hand_animation():
 	$AnimationPlayer.play("HandMoving")
 
@@ -40,7 +49,7 @@ func on_onboarding():
 #	$OnboardingOverlay/Intro4.rect_position = monster_2d + monster_offset
 #	$OnboardingOverlay/Intro5.rect_position = crystal_2d + crystal_offset
 #	$OnboardingOverlay/Intro6.rect_position = crystal_2d + crystal_offset
-		
+
 	$OnboardingOverlay.show()
 	$OnboardingOverlay/AnimationPlayer.play("FadeIn")
 	yield($OnboardingOverlay/AnimationPlayer,"animation_finished")
@@ -61,7 +70,7 @@ func _input(event):
 		if event.scancode == KEY_ESCAPE:
 			skip_all = true
 		emit_signal("_skip_step")
-		
+
 
 func onboarding_step(i):
 	if not skip_all:
@@ -70,15 +79,15 @@ func onboarding_step(i):
 		var intro_player = intro.get_node("AnimationPlayer")
 		intro_player.play("FadeIn")
 		yield(intro_player, "animation_finished")
-		
+
 		var timer = get_tree().create_timer(4)
 		timer.connect("timeout", self, "emit_signal", ["_skip_step"])
-		
+
 		yield(self, "_skip_step")
-		
+
 		if timer != null:
 			timer.disconnect("timeout", self, "emit_signal")
-		
+
 		intro_player.play_backwards("FadeIn")
 		yield(intro_player, "animation_finished")
 		intro.hide()
