@@ -1,5 +1,6 @@
 extends Node
 
+const Ground = preload("res://Scenes/Ground.tscn")
 const Obstacle = preload("res://Scenes/Obstacle.tscn")
 const Crystal = preload("res://Scenes/Crystal.tscn")
 
@@ -91,6 +92,10 @@ func build(player : Entity, dungeon):
 	for key in rooms:
 		var length = room_size + 1
 		var corner = key * length
+
+		var ground = Ground.instance()
+		dungeon.add_child(ground)
+		ground.translation = dungeon.tile_to_pos(corner + Vector2.ONE / 2)
 
 		for i in range(0, length):
 			if not rooms.has(key + Vector2(-1, 0)):
