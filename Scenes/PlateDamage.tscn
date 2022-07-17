@@ -1,99 +1,46 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/PlateDamage.gd" type="Script" id=1]
-
-[sub_resource type="PrismMesh" id=1]
-size = Vector3( 0.1, 0.1, 0.1 )
+[ext_resource path="res://Assets/Environment/spike.tscn" type="PackedScene" id=3]
 
 [node name="PlateDamage" type="Spatial"]
 script = ExtResource( 1 )
 
-[node name="Mesh" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0.05, 0.45 )
-mesh = SubResource( 1 )
-material/0 = null
+[node name="spike19" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.07, 0, 0, 0, 0.1, 0, 0, 0, 0.07, 0, -0.0021563, 0 )
 
-[node name="Mesh2" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 0.05, 0.45 )
-mesh = SubResource( 1 )
-material/0 = null
+[node name="spike28" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.0699977, 0, -0.000563212, 0, 0.1, 0, 0.000563212, 0, 0.0699977, 0.19347, -0.0021563, -0.193646 )
 
-[node name="Mesh3" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.05, 0.45 )
-mesh = SubResource( 1 )
-material/0 = null
+[node name="spike29" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.0699977, 0, -0.000563212, 0, 0.1, 0, 0.000563212, 0, 0.0699977, -0.193517, -0.0021563, -0.193646 )
 
-[node name="Mesh4" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0.05, 0.1 )
-mesh = SubResource( 1 )
-material/0 = null
+[node name="spike30" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.0699977, 0, -0.000563212, 0, 0.1, 0, 0.000563212, 0, 0.0699977, -0.193517, -0.0021563, 0.219489 )
 
-[node name="Mesh5" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 0.05, 0.1 )
-mesh = SubResource( 1 )
-material/0 = null
+[node name="spike31" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.0699977, 0, -0.000563212, 0, 0.1, 0, 0.000563212, 0, 0.0699977, 0.184318, -0.0021563, 0.219489 )
 
-[node name="Mesh6" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.05, 0.1 )
-mesh = SubResource( 1 )
-material/0 = null
+[node name="spike20" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.07, 0, 0, 0, 0.1, 0, 0, 0, 0.07, -0.367805, -0.0021563, 0.417165 )
 
-[node name="Mesh7" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0.05, -0.25 )
-mesh = SubResource( 1 )
-material/0 = null
+[node name="spike21" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.07, 0, 0, 0, 0.1, 0, 0, 0, 0.07, 0.359151, -0.0021563, 0.418473 )
 
-[node name="Mesh8" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 0.05, -0.25 )
-mesh = SubResource( 1 )
-material/0 = null
+[node name="spike22" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.07, 0, 0, 0, 0.1, 0, 0, 0, 0.07, 0.0043273, -0.0021563, 0.417165 )
 
-[node name="Mesh9" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.05, -0.25 )
-mesh = SubResource( 1 )
-material/0 = null
+[node name="spike23" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.07, 0, 0, 0, 0.1, 0, 0, 0, 0.07, 0.0043273, -0.0021563, -0.405179 )
 
-[node name="Mesh10" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.27615, 0.05, 0.27506 )
-mesh = SubResource( 1 )
-material/0 = null
+[node name="spike24" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.07, 0, 0, 0, 0.1, 0, 0, 0, 0.07, -0.403864, -0.0021563, -0.402564 )
 
-[node name="Mesh11" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0738502, 0.05, 0.27506 )
-mesh = SubResource( 1 )
-material/0 = null
+[node name="spike25" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.07, 0, 0, 0, 0.1, 0, 0, 0, 0.07, 0.370689, -0.0021563, -0.405179 )
 
-[node name="Mesh12" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.42385, 0.05, 0.27506 )
-mesh = SubResource( 1 )
-material/0 = null
+[node name="spike26" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.07, 0, 0, 0, 0.1, 0, 0, 0, 0.07, 0.370689, -0.0021563, 0.000852332 )
 
-[node name="Mesh13" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.27615, 0.05, -0.0749402 )
-mesh = SubResource( 1 )
-material/0 = null
-
-[node name="Mesh14" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0738502, 0.05, -0.0749402 )
-mesh = SubResource( 1 )
-material/0 = null
-
-[node name="Mesh15" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.42385, 0.05, -0.0749402 )
-mesh = SubResource( 1 )
-material/0 = null
-
-[node name="Mesh16" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.27615, 0.05, -0.42494 )
-mesh = SubResource( 1 )
-material/0 = null
-
-[node name="Mesh17" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0738502, 0.05, -0.42494 )
-mesh = SubResource( 1 )
-material/0 = null
-
-[node name="Mesh18" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.42385, 0.05, -0.42494 )
-mesh = SubResource( 1 )
-material/0 = null
+[node name="spike27" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.07, 0, 0, 0, 0.1, 0, 0, 0, 0.07, -0.38944, -0.0021563, 0.000852317 )
