@@ -95,7 +95,7 @@ func _process(delta):
 func next_stage():
 	Global.turns += Global.BONUS_TURNS_STAGE_FINISH
 	Global.current_stage += 1
-	get_tree().change_scene("res://Scenes/Dungeon.tscn")
+	get_tree().change_scene("res://Scenes/Transition.tscn")
 
 func process_turn_logic():
 	# player attack
