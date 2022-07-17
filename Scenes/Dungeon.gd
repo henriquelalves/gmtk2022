@@ -35,6 +35,11 @@ func intro_animation():
 	$UIController.hand_animation()
 	yield(get_tree().create_timer(1.1), "timeout")
 	player.show()
+	
+	if Global.onboarding:
+		yield($UIController.on_onboarding(), "completed")
+		Global.onboarding = false
+	
 	block_input = false
 
 func end_animation():

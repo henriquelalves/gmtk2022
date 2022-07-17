@@ -246,16 +246,18 @@ func choose_divider() -> int:
 
 func build_layout(corner : Vector2, crystals : int, current_stage : int, dungeon):
 	var phi = 0
-	match randi() % 4:
-		1:
-			corner += Vector2(room_size - 1, 0)
-			phi = PI / 2
-		2:
-			corner += Vector2(room_size - 1, room_size - 1)
-			phi = PI
-		3:
-			corner += Vector2(0, room_size - 1)
-			phi = PI * 3 / 2
+	
+	if Global.current_stage != 0:
+		match randi() % 4:
+			1:
+				corner += Vector2(room_size - 1, 0)
+				phi = PI / 2
+			2:
+				corner += Vector2(room_size - 1, room_size - 1)
+				phi = PI
+			3:
+				corner += Vector2(0, room_size - 1)
+				phi = PI * 3 / 2
 
 	var space = Space.new(corner, phi, dungeon)
 	match choose_layout(current_stage):

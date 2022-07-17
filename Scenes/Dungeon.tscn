@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Scenes/Dungeon.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/CameraControl.gd" type="Script" id=2]
@@ -27,6 +27,223 @@ size = 36
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 5 )
+
+[sub_resource type="Animation" id=11]
+resource_name = "FadeIn"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "FadeIn"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=14]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "FadeIn"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=16]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "FadeIn"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=18]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=19]
+resource_name = "FadeIn"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=20]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=21]
+resource_name = "FadeIn"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=22]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "FadeIn"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
 
 [sub_resource type="Animation" id=7]
 resource_name = "HandMoving"
@@ -134,6 +351,202 @@ margin_bottom = 588.0
 rect_rotation = -87.8432
 texture = ExtResource( 7 )
 expand = true
+
+[node name="OnboardingOverlay" type="ColorRect" parent="UIController"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.368627 )
+
+[node name="Intro1" type="Label" parent="UIController/OnboardingOverlay"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -1011.0
+margin_top = 101.0
+margin_right = -645.0
+margin_bottom = 178.0
+custom_fonts/font = SubResource( 6 )
+text = "This is how many turns you have left to complete the stage!"
+valign = 2
+autowrap = true
+
+[node name="Up" type="Label" parent="UIController/OnboardingOverlay/Intro1"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -192.0
+margin_top = -25.0
+margin_right = -175.0
+margin_bottom = 12.0
+rect_rotation = 89.7773
+custom_fonts/font = SubResource( 6 )
+text = "<"
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/OnboardingOverlay/Intro1"]
+anims/FadeIn = SubResource( 11 )
+anims/RESET = SubResource( 12 )
+
+[node name="Intro2" type="Label" parent="UIController/OnboardingOverlay"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -1011.0
+margin_top = 101.0
+margin_right = -645.0
+margin_bottom = 178.0
+custom_fonts/font = SubResource( 6 )
+text = "They accumulate each stage, so be careful using them!"
+valign = 2
+autowrap = true
+
+[node name="Up" type="Label" parent="UIController/OnboardingOverlay/Intro2"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -192.0
+margin_top = -25.0
+margin_right = -175.0
+margin_bottom = 12.0
+rect_rotation = 89.7773
+custom_fonts/font = SubResource( 6 )
+text = "<"
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/OnboardingOverlay/Intro2"]
+anims/FadeIn = SubResource( 13 )
+anims/RESET = SubResource( 14 )
+
+[node name="Intro3" type="Label" parent="UIController/OnboardingOverlay"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -585.0
+margin_top = 56.0
+margin_right = -219.0
+margin_bottom = 173.0
+custom_fonts/font = SubResource( 6 )
+text = "This is a monster! Step on them to gain turns!"
+valign = 2
+autowrap = true
+
+[node name="Up" type="Label" parent="UIController/OnboardingOverlay/Intro3"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -231.0
+margin_top = 141.0
+margin_right = -214.0
+margin_bottom = 178.0
+rect_rotation = -89.269
+custom_fonts/font = SubResource( 6 )
+text = "<"
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/OnboardingOverlay/Intro3"]
+anims/FadeIn = SubResource( 15 )
+anims/RESET = SubResource( 16 )
+
+[node name="Intro4" type="Label" parent="UIController/OnboardingOverlay"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -648.0
+margin_top = 57.0
+margin_right = -219.0
+margin_bottom = 174.0
+custom_fonts/font = SubResource( 6 )
+text = "You'll win more turns depending on the dice face when you step on them!"
+valign = 2
+autowrap = true
+
+[node name="Up" type="Label" parent="UIController/OnboardingOverlay/Intro4"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -231.0
+margin_top = 141.0
+margin_right = -214.0
+margin_bottom = 178.0
+rect_rotation = -89.269
+custom_fonts/font = SubResource( 6 )
+text = "<"
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/OnboardingOverlay/Intro4"]
+anims/FadeIn = SubResource( 17 )
+anims/RESET = SubResource( 18 )
+
+[node name="Intro5" type="Label" parent="UIController/OnboardingOverlay"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -517.0
+margin_top = 253.0
+margin_right = -88.0
+margin_bottom = 370.0
+custom_fonts/font = SubResource( 6 )
+text = "Win the stage by activating the crystals!"
+valign = 2
+autowrap = true
+
+[node name="Up" type="Label" parent="UIController/OnboardingOverlay/Intro5"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -244.0
+margin_top = 14.0
+margin_right = -227.0
+margin_bottom = 51.0
+rect_rotation = 88.8921
+custom_fonts/font = SubResource( 6 )
+text = "<"
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/OnboardingOverlay/Intro5"]
+anims/FadeIn = SubResource( 19 )
+anims/RESET = SubResource( 20 )
+
+[node name="Intro6" type="Label" parent="UIController/OnboardingOverlay"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -554.0
+margin_top = 299.0
+margin_right = -125.0
+margin_bottom = 416.0
+custom_fonts/font = SubResource( 6 )
+text = "You can only activate the crystal with a value of 1, 2 or 3 on the dice!"
+valign = 2
+autowrap = true
+
+[node name="Up" type="Label" parent="UIController/OnboardingOverlay/Intro6"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -206.0
+margin_top = -30.0
+margin_right = -189.0
+margin_bottom = 7.0
+rect_rotation = 90.0938
+custom_fonts/font = SubResource( 6 )
+text = "<"
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/OnboardingOverlay/Intro6"]
+anims/FadeIn = SubResource( 21 )
+anims/RESET = SubResource( 22 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UIController/OnboardingOverlay"]
+anims/FadeIn = SubResource( 9 )
+anims/RESET = SubResource( 10 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UIController"]
 anims/HandMoving = SubResource( 7 )
