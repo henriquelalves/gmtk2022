@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Assets/transition.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/CameraControl.gd" type="Script" id=2]
@@ -11,9 +11,10 @@
 [ext_resource path="res://Assets/DiceFaceMaterial.tres" type="Material" id=9]
 [ext_resource path="res://Assets/6_dots.png" type="Texture" id=10]
 [ext_resource path="res://Assets/5_dots.png" type="Texture" id=11]
-[ext_resource path="res://Assets/2_dots.png" type="Texture" id=12]
+[ext_resource path="res://Assets/3_dots_blue.png" type="Texture" id=12]
 [ext_resource path="res://Assets/4_dots.png" type="Texture" id=13]
 [ext_resource path="res://Assets/Sound/explosion.wav" type="AudioStream" id=14]
+[ext_resource path="res://Assets/2_dots_blue.png" type="Texture" id=15]
 
 [sub_resource type="QuadMesh" id=5]
 
@@ -21,7 +22,7 @@
 albedo_texture = ExtResource( 10 )
 
 [sub_resource type="SpatialMaterial" id=7]
-albedo_texture = ExtResource( 12 )
+albedo_texture = ExtResource( 15 )
 
 [sub_resource type="SpatialMaterial" id=8]
 albedo_texture = ExtResource( 11 )
@@ -31,6 +32,9 @@ albedo_texture = ExtResource( 8 )
 
 [sub_resource type="SpatialMaterial" id=10]
 albedo_texture = ExtResource( 13 )
+
+[sub_resource type="SpatialMaterial" id=19]
+albedo_texture = ExtResource( 12 )
 
 [sub_resource type="DynamicFont" id=11]
 size = 80
@@ -377,7 +381,7 @@ material/0 = SubResource( 8 )
 [node name="FaceForward" type="MeshInstance" parent="Mesh3"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
 mesh = SubResource( 5 )
-material/0 = SubResource( 9 )
+material/0 = SubResource( 19 )
 
 [node name="FaceBackward" type="MeshInstance" parent="Mesh3"]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -0.5 )
