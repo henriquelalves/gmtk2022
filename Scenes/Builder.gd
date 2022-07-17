@@ -74,7 +74,7 @@ const available_layouts = [
 func build(player : Entity, dungeon):
 	dungeon.add_child(player)
 
-	var current_stage = randi() % 6 # Global.current_stage
+	var current_stage = min(Global.current_stage, 5)
 
 	var room_count = room_counts[current_stage]
 	var start = randi() % 4
@@ -272,8 +272,11 @@ func build_layout(corner : Vector2, crystals : int, current_stage : int, dungeon
 		Layout.NORMAL_2:
 			return build_layout_normal_2(crystals, space)
 
-		_:
-			return build_layout_tutorial(crystals, space)
+		Layout.NORMAL_3:
+			return build_layout_normal_3(crystals, space)
+
+		Layout.HARD:
+			return build_layout_hard(crystals, space)
 
 func build_layout_tutorial(crystals : int, space : Space):
 	space.build_crystal(Vector2(2, 4), Vector2(3, 4))
@@ -347,6 +350,40 @@ func build_layout_normal_2(crystals : int, space : Space):
 	space.build_monster_random(Vector2(0, 1))
 
 	return space.pos(Vector2(1, 5))
+
+func build_layout_normal_3(crystals : int, space : Space):
+	if crystals >= 1:
+		space.build_crystal(Vector2(5, 5), Vector2(4, 5))
+
+	if crystals >= 2:
+		space.build_crystal(Vector2(3, 4), Vector2(3, 3))
+
+	space.build_monster_square(Vector2(4, 2))
+	space.build_monster_square(Vector2(1, 4))
+
+	space.build_plate_damage(Vector2(0, 2))
+	space.build_plate_damage(Vector2(2, 2))
+
+	return space.pos(Vector2(0, 1))
+
+func build_layout_hard(crystals : int, space : Space):
+	if crystals >= 1:
+		space.build_crystal(Vector2(2, 5), Vector2(5, 3))
+
+	if crystals >= 2:
+		space.build_crystal(Vector2(3, 1), Vector2(2, 1))
+
+	space.build_monster_square(Vector2(4, 4))
+	space.build_monster_random(Vector2(1, 4))
+	space.build_monster_rand_cardinal(Vector2(3, 0))
+
+	space.build_plate_damage(Vector2(0, 2))
+	space.build_plate_damage(Vector2(2, 2))
+	space.build_plate_damage(Vector2(3, 2))
+	space.build_plate_damage(Vector2(5, 2))
+	space.build_plate_bounce(Vector2(1, 2), 0)
+
+	return space.pos(Vector2(0, 3))
 
 func choose_layout(current_stage : int) -> int:
 	var options = available_layouts[current_stage]
